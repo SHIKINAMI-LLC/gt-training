@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>GT Training</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #141420;
+  --surface2: #1c1c2e;
+  --accent: #e63946;
+  --accent2: #ff6b6b;
+  --green: #2ecc71;
+  --yellow: #f1c40f;
+  --blue: #3498db;
+  --text: #f0f0f0;
+  --text2: #a0a0b0;
+  --border: #2a2a3e;
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  padding-bottom: 80px;
+  overflow-x: hidden;
+}
+
+/* === HEADER === */
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 20px 16px 16px;
+  border-bottom: 2px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent2);
+}
+.header .sub {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 2px;
+}
+
+/* === TAB NAV === */
+.tab-nav {
+  display: flex;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 62px;
+  z-index: 99;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-btn.active {
+  color: var(--accent2);
+  border-bottom-color: var(--accent);
+}
+
+/* === TAB CONTENT === */
+.tab-content { display: none; padding: 12px; }
+.tab-content.active { display: block; }
+
+/* === CARDS === */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.card-header:active { background: var(--surface2); }
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+}
+.card-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.badge-reps { background: var(--accent); color: white; }
+.badge-time { background: var(--blue); color: white; }
+.badge-hold { background: var(--green); color: white; }
+.card-arrow {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text2);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.card.open .card-arrow { transform: rotate(90deg); }
+.card-body {
+  display: none;
+  padding: 0 14px 14px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.card.open .card-body { display: block; }
+
+.card-body .step {
+  padding: 4px 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+  margin-bottom: 6px;
+}
+.point {
+  background: var(--surface2);
+  border-left: 3px solid var(--yellow);
+  padding: 8px 10px;
+  margin-top: 8px;
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  color: var(--yellow);
+}
+
+/* === SECTION HEADER === */
+.section {
+  padding: 14px 14px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent2);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section .icon { font-size: 16px; }
+
+/* === WEEK SCHEDULE === */
+.week-grid { padding: 0 12px; }
+.day-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+.day-row:last-child { border-bottom: none; }
+.day-label {
+  flex: 0 0 28px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent2);
+  padding-top: 2px;
+}
+.day-menu {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.day-time {
+  flex: 0 0 40px;
+  font-size: 11px;
+  color: var(--text2);
+  text-align: right;
+  padding-top: 2px;
+}
+
+/* === TODAY BANNER === */
+.today-banner {
+  background: linear-gradient(135deg, var(--accent) 0%, #c0392b 100%);
+  margin: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+.today-banner .label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.today-banner .menu {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.today-banner .time {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* === QUICK VERSION === */
+.quick-list {
+  padding: 0 12px;
+}
+.quick-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+.quick-item:last-child { border-bottom: none; }
+.quick-num {
+  flex: 0 0 24px;
+  height: 24px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+.quick-name { flex: 1; font-size: 13px; }
+.quick-dose {
+  font-size: 11px;
+  color: var(--text2);
+  flex-shrink: 0;
+}
+
+/* === PROTOCOL === */
+.protocol {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 0 12px 10px;
+  padding: 14px;
+}
+.protocol h3 {
+  font-size: 13px;
+  color: var(--accent2);
+  margin-bottom: 8px;
+}
+.protocol ul {
+  list-style: none;
+  padding: 0;
+}
+.protocol li {
+  font-size: 12px;
+  color: var(--text2);
+  padding: 3px 0 3px 16px;
+  position: relative;
+}
+.protocol li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.red-flag {
+  background: rgba(230,57,70,0.1);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 8px 12px;
+}
+.red-flag h4 {
+  font-size: 12px;
+  color: var(--accent2);
+  margin-bottom: 4px;
+}
+.red-flag li {
+  font-size: 12px;
+  color: var(--accent2);
+  padding: 2px 0 2px 16px;
+  position: relative;
+  list-style: none;
+}
+.red-flag li::before {
+  content: '⚠';
+  position: absolute;
+  left: 0;
+}
+
+/* === INFO BLOCK === */
+.info-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 0 12px 10px;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.info-block h3 {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.info-block strong { color: var(--text); }
+
+/* === FOOTER === */
+.footer-msg {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 12px;
+  color: var(--text2);
+  font-style: italic;
+}
+
+/* === UPDATED INDICATOR === */
+.updated {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text2);
+  padding: 8px;
+  opacity: 0.6;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏁 GT TRAINING</h1>
+  <div class="sub">Racer's Body Program — Boss</div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('today')">TODAY</button>
+  <button class="tab-btn" onclick="switchTab('routine')">DAILY</button>
+  <button class="tab-btn" onclick="switchTab('quick')">QUICK</button>
+  <button class="tab-btn" onclick="switchTab('week')">WEEK</button>
+  <button class="tab-btn" onclick="switchTab('running')">RUN</button>
+  <button class="tab-btn" onclick="switchTab('diet')">DIET</button>
+</nav>
+
+<!-- ===== TODAY TAB ===== -->
+<div id="today" class="tab-content active">
+  <div class="today-banner" id="today-banner">
+    <div class="label">TODAY'S MISSION</div>
+    <div class="menu" id="today-menu">Loading...</div>
+    <div class="time" id="today-time"></div>
+  </div>
+  <div class="section"><span class="icon">📋</span> 今日のやること</div>
+  <div class="info-block" id="today-detail"></div>
+  <div class="section"><span class="icon">📊</span> 腰痛トラッキング</div>
+  <div class="info-block">
+    <strong>起床時:</strong> ___/10<br>
+    <strong>活動後:</strong> ___/10（何をしたか）<br>
+    <strong>就寝前:</strong> ___/10<br>
+    <strong>メモ:</strong>
+  </div>
+</div>
+
+<!-- ===== DAILY ROUTINE TAB ===== -->
+<div id="routine" class="tab-content">
+  <div class="section"><span class="icon">🔧</span> PART 1: 反り腰改善（10min）</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">1-1. キャットカウ</span>
+      <span class="card-badge badge-reps">10回</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">四つん這い。息を吐きながら背中を丸める（Cat）→ 息を吸いながら反らす（Cow）</div>
+      <div class="point">💡 骨盤の動きを意識。Catで骨盤を後傾、Cowで前傾。動きの範囲を確認する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">1-2. デッドバグ</span>
+      <span class="card-badge badge-reps">左右10回×2</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">仰向け。両手を天井へ、両膝90度。</div>
+      <div class="step">右手を頭上へ伸ばしながら左脚を伸ばす → 戻す → 反対側</div>
+      <div class="point">💡 腰が床から浮かないこと。腰と床の間に隙間ができたらその手前で止める。これが反り腰改善の核心。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">1-3. グルートブリッジ</span>
+      <span class="card-badge badge-reps">15回×2</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">仰向け。膝を曲げ、足を床につける。</div>
+      <div class="step">お尻を持ち上げる。トップで臀筋をギュッと2秒締める。</div>
+      <div class="point">💡 腰で持ち上げない。お尻の力だけ。頂点で「お尻に力が入っている」ことを確認。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">1-4. 腸腰筋ストレッチ</span>
+      <span class="card-badge badge-hold">左右30秒×2</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">片膝立ち（後ろの膝が床につく）。</div>
+      <div class="step">骨盤を後傾させた状態（おへそを上に向けるイメージ）で、体を前方へスライド。</div>
+      <div class="step">股関節前面（腸腰筋）が伸びるのを感じる。</div>
+      <div class="point">💡 腰を反らさない。反ったら腸腰筋ではなく腰が伸びるだけでNG。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">1-5. クラムシェル</span>
+      <span class="card-badge badge-reps">左右15回×2</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">横向きに寝る。膝を90度に曲げ、足は重ねたまま。</div>
+      <div class="step">上の膝を開く（貝殻が開くように）→ ゆっくり戻す。</div>
+      <div class="point">💡 骨盤が後ろに倒れないよう固定。お尻の横（中臀筋）に効いていればOK。ランナーズニー予防にも直結。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">1-6. チャイルドポーズ＋ラットストレッチ</span>
+      <span class="card-badge badge-hold">計90秒</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">正座から両手を前方に伸ばし、額を床に近づける（チャイルドポーズ）。</div>
+      <div class="step">両手を右斜め前にずらす → 左の脇腹〜背中の伸びを感じる。30秒。</div>
+      <div class="step">反対側も同様。30秒。</div>
+      <div class="step">中央に戻し、手のひらを上に向けて（外旋）さらに遠くへ伸ばす。30秒。</div>
+      <div class="point">💡 「両手を組んで上に伸ばせない」原因の本丸。お尻がかかとから浮かないように。吐くたびに少し遠くへ。</div>
+    </div>
+  </div>
+
+  <div class="section"><span class="icon">💪</span> PART 2: 左肩リハビリ（5min）</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">2-1. ペンデュラム</span>
+      <span class="card-badge badge-reps">各10回</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">テーブルに右手をつき、上体を前傾。左腕をだらんと垂らす。</div>
+      <div class="step">小さく円を描く（時計回り10回→反時計回り10回）</div>
+      <div class="step">前後に振る（10回）、左右に振る（10回）</div>
+      <div class="point">💡 力を完全に抜く。重力と慣性だけで動かす。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">2-2. ウォールスライド</span>
+      <span class="card-badge badge-reps">10回</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">壁に背中をつけて立つ。両腕を壁につけ、肘90度（「降参」のポーズ）。</div>
+      <div class="step">壁から離さないように両手を頭上へスライド → 戻す。</div>
+      <div class="point">💡 左腕は上がるところまででOK。毎日少しずつ。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">2-3. クロスボディストレッチ</span>
+      <span class="card-badge badge-hold">30秒</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">左腕をまっすぐ前に伸ばし、右手で左肘を持ち、体の右側に引き寄せる。</div>
+      <div class="point">💡 肩後面のストレッチ。痛みなく心地よい伸びを感じるところで。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">2-4. タオルストレッチ ⭐</span>
+      <span class="card-badge badge-hold">20秒×3</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">タオルの一端を右手で頭の後ろから持ち、もう一端を左手で腰の後ろから掴む。</div>
+      <div class="step">右手でタオルをゆっくり引き上げ、左手を上方へ誘導する。</div>
+      <div class="point">💡 左肩の可動域を直接改善するキーエクササイズ。焦らない。1ヶ月で1-2cm上がれば大成功。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">2-5. エクスターナルローテーション</span>
+      <span class="card-badge badge-reps">左右15回</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">肘を体側に固定し、90度に曲げる。</div>
+      <div class="step">前腕を外側に回す（ドアを開ける動作）。</div>
+      <div class="step">可能なら軽い抵抗（ゴムチューブ or タオル）</div>
+      <div class="point">💡 肩のローテーターカフ強化。左肩は痛みのない範囲で。</div>
+    </div>
+  </div>
+
+  <div class="section"><span class="icon">🧠</span> PART 3: 首・肩・胸椎（5min）</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">3-1. 首の4方向ストレッチ</span>
+      <span class="card-badge badge-hold">計2分</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">右へ倒す（右耳→右肩）→ 30秒</div>
+      <div class="step">左へ倒す → 30秒</div>
+      <div class="step">右へ回旋 → 15秒 → 左へ回旋 → 15秒</div>
+      <div class="step">顎を胸に近づける（前屈）→ 15秒</div>
+      <div class="point">💡 右回旋・左回旋はレーシング中のミラー確認動作そのもの。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">3-2. チンタック</span>
+      <span class="card-badge badge-hold">10秒×5</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">壁に背をつけて立つ。顎を引いて後頭部を壁に押しつける。</div>
+      <div class="point">💡 二重あごを作るイメージ。デスクワークで前に出た頭の位置をリセット。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">3-3. 胸椎回旋</span>
+      <span class="card-badge badge-reps">左右10回</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">四つん這い。右手を後頭部に当てる。</div>
+      <div class="step">右肘を左肘に向かって下ろす → 天井に向かって開く。</div>
+      <div class="point">💡 腰ではなく胸の高さで回る。レーシングポジションでの上体のしなやかさに直結。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-title">3-4. ドアフレーム胸筋ストレッチ</span>
+      <span class="card-badge badge-hold">30秒×2</span>
+      <span class="card-arrow">▸</span>
+    </div>
+    <div class="card-body">
+      <div class="step">ドアフレームに両手をつき（肘90度の高さ）、一歩前に出て胸を開く。</div>
+      <div class="point">💡 デスクワークで縮まった胸筋を開放。肩甲骨が寄せられる感覚があればOK。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUICK VERSION TAB ===== -->
+<div id="quick" class="tab-content">
+  <div class="section"><span class="icon">⚡</span> 時間がない日の最低限（10min）</div>
+  <div class="quick-list">
+    <div class="quick-item"><span class="quick-num">1</span><span class="quick-name">キャットカウ</span><span class="quick-dose">10回 / 1分</span></div>
+    <div class="quick-item"><span class="quick-num">2</span><span class="quick-name">デッドバグ</span><span class="quick-dose">左右10回 / 2分</span></div>
+    <div class="quick-item"><span class="quick-num">3</span><span class="quick-name">グルートブリッジ</span><span class="quick-dose">15回 / 1分</span></div>
+    <div class="quick-item"><span class="quick-num">4</span><span class="quick-name">腸腰筋ストレッチ</span><span class="quick-dose">左右30秒 / 2分</span></div>
+    <div class="quick-item"><span class="quick-num">5</span><span class="quick-name">タオルストレッチ</span><span class="quick-dose">20秒×2 / 1分</span></div>
+    <div class="quick-item"><span class="quick-num">6</span><span class="quick-name">首4方向</span><span class="quick-dose">各方向 / 2分</span></div>
+    <div class="quick-item"><span class="quick-num">7</span><span class="quick-name">チンタック</span><span class="quick-dose">10秒×3 / 1分</span></div>
+  </div>
+  <div class="footer-msg">どんなに忙しくても、これだけはやる。</div>
+</div>
+
+<!-- ===== WEEK SCHEDULE TAB ===== -->
+<div id="week" class="tab-content">
+
+  <div class="section"><span class="icon">🔥</span> WEEK 1: IGNITION（2/9-2/15）</div>
+  <div class="info-block">強度 40-50% ｜ 反り腰改善に全振り＋身体を動かす習慣を取り戻す</div>
+  <div class="week-grid">
+    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋ウォーキング30分</span><span class="day-time">50分</span></div>
+    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身ライト（懸垂50%、腕立て50%）＋体幹</span><span class="day-time">50分</span></div>
+    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 40-50分</span><span class="day-time">70分</span></div>
+    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身アクティベーション（グルートブリッジ、クラムシェル中心）</span><span class="day-time">50分</span></div>
+    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋ウォーキング30分 or 軽いサイクリング30分</span><span class="day-time">50分</span></div>
+    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋全身ライト（上半身＋下半身を低強度で通す）</span><span class="day-time">60分</span></div>
+    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋完全レスト or 散歩</span><span class="day-time">30分</span></div>
+  </div>
+
+  <div class="section"><span class="icon">🏎️</span> WEEK 2: WARM-UP LAP（2/16-2/22）</div>
+  <div class="info-block">強度 60-70% ｜ トレーニング構造を戻す。反り腰ルーティン継続。</div>
+  <div class="week-grid">
+    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋レスト or 軽いウォーキング</span><span class="day-time">30分</span></div>
+    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身（懸垂70%、ディップス、腕立て）＋首強化＋体幹</span><span class="day-time">55分</span></div>
+    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 60分</span><span class="day-time">80分</span></div>
+    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身パワー（ブルガリアンSQ、カーフレイズ）＋体幹</span><span class="day-time">55分</span></div>
+    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋軽めHIIT（タバタ式4分×1セット）or サイクリング40分</span><span class="day-time">55分</span></div>
+    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 70-90分</span><span class="day-time">110分</span></div>
+    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋モビリティ重視（ヨガ的フロー）</span><span class="day-time">40分</span></div>
+  </div>
+
+  <div class="section"><span class="icon">🏁</span> WEEK 3: QUALIFYING（2/23-3/1）</div>
+  <div class="info-block">強度 75-85% ｜ ほぼ通常構造に復帰。ランニング短時間再導入。</div>
+  <div class="week-grid">
+    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋レスト</span><span class="day-time">25分</span></div>
+    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身筋力（フルセット）＋首Gフォース＋体幹</span><span class="day-time">60分</span></div>
+    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 80-90分</span><span class="day-time">110分</span></div>
+    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身パワー（プライオ導入）＋体幹</span><span class="day-time">60分</span></div>
+    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋HIIT（タバタ4分×2）＋ジョグ15分（フォーム意識）</span><span class="day-time">55分</span></div>
+    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋ロングライド90-120分 or ランニング30分</span><span class="day-time">120分</span></div>
+    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋モビリティ＋軽い有酸素</span><span class="day-time">40分</span></div>
+  </div>
+
+  <div class="section"><span class="icon">🏆</span> WEEK 4: RACE PACE（3/2-3/8）</div>
+  <div class="info-block">強度 90-100% ｜ Phase 2フルプログラムに完全復帰</div>
+  <div class="week-grid">
+    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋完全レスト</span><span class="day-time">25分</span></div>
+    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身筋力＋首Gフォース＋体幹</span><span class="day-time">60分</span></div>
+    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング90-120分</span><span class="day-time">120分</span></div>
+    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身パワー＋プライオメトリクス＋体幹</span><span class="day-time">60分</span></div>
+    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋HIIT（タバタ式高強度）or 実車練習</span><span class="day-time">55分</span></div>
+    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋ロングライド120分 or ランニング40-60分</span><span class="day-time">140分</span></div>
+    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋モビリティ＋軽い有酸素</span><span class="day-time">40分</span></div>
+  </div>
+</div>
+
+<!-- ===== RUNNING TAB ===== -->
+<div id="running" class="tab-content">
+  <div class="section"><span class="icon">🏃</span> ランニング再導入プロトコル</div>
+
+  <div class="protocol">
+    <h3>Step 1（Week 3）: ジョグ15分のみ</h3>
+    <ul>
+      <li>着地はミッドフット（かかと着地NG）</li>
+      <li>ケイデンス170-180spm（小刻みに）</li>
+      <li>体幹を意識し骨盤を安定（反り腰→膝負荷増大）</li>
+      <li>走行前にVMO活性化（ターミナルニーエクステンション3×15）</li>
+    </ul>
+  </div>
+
+  <div class="protocol">
+    <h3>Step 2（Week 4）: 30分まで延長</h3>
+    <ul>
+      <li>5分ごとにフォームチェック</li>
+    </ul>
+  </div>
+
+  <div class="protocol">
+    <h3>Step 3（Week 5以降）: 40-60分</h3>
+    <ul>
+      <li>問題なければ週2回まで増やす</li>
+    </ul>
+  </div>
+
+  <div class="red-flag">
+    <h4>🚩 レッドフラグ（即中止）</h4>
+    <ul>
+      <li>膝外側にピリッとした痛み</li>
+      <li>走行中に痛みが増悪する</li>
+      <li>翌日に膝の腫れや熱感</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== DIET TAB ===== -->
+<div id="diet" class="tab-content">
+  <div class="section"><span class="icon">🍽️</span> 食事の方針（復帰期間）</div>
+
+  <div class="info-block">
+    <h3>タンパク質</h3>
+    体重×1.6-2.0g/日 = <strong>106-133g/日</strong>が目標。筋肉の再活性化のため通常より多め。
+  </div>
+
+  <div class="info-block">
+    <h3>カーボサイクル</h3>
+    トレーニング日は白米・十六穀米をしっかり。レスト日は控えめ。
+  </div>
+
+  <div class="info-block">
+    <h3>胃腸ケア（毎日必須）</h3>
+    <strong>納豆＋ビオフェルミンSプラス</strong><br>
+    インフル後は腸内環境がリセットされている可能性あり。
+  </div>
+
+  <div class="info-block">
+    <h3>復帰期に意識する食材</h3>
+    <strong>抗炎症:</strong> ターメリック、生姜、青魚（サバ・サーモン）、ブルーベリー<br>
+    <strong>コラーゲン生成:</strong> ビタミンC（ミカン）、ゼラチン質（鶏手羽・豚足系スープ）<br>
+    <strong>マグネシウム:</strong> ナッツ、豆腐、ほうれん草
+  </div>
+
+  <div class="info-block">
+    <h3>朝のルーティン</h3>
+    <strong>無調整ソイラテ 500ml</strong>（約200kcal / タンパク質18g）→ トレーニング前の燃料
+  </div>
+</div>
+
+<div class="updated">Last updated: 2026-02-08</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleCard(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+// Today's schedule logic
+const weekSchedule = {
+  1: { menu: '毎日ルーティン＋ウォーキング30分', time: '50分', detail: '① ソイラテ500ml\n② 体重測定\n③ 毎日ルーティン（25分）\n④ ウォーキング30分（腰痛の出方を観察）\n⑤ 腰痛レベル記録' },
+  2: { menu: '毎日ルーティン＋上半身ライト＋体幹', time: '50分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ 懸垂（50%の回数）\n④ 腕立て伏せ（50%の回数）\n⑤ ニーレイズ or プランク\n⑥ 腰痛レベル記録' },
+  3: { menu: '毎日ルーティン＋Zone 2サイクリング 40-50分', time: '70分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ Zone 2サイクリング 40-50分（HR 100-120bpm）\n④ 腰痛レベル記録' },
+  4: { menu: '毎日ルーティン＋下半身アクティベーション', time: '50分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ グルートブリッジ 追加セット\n④ クラムシェル 追加セット\n⑤ カーフレイズ\n⑥ 腰痛レベル記録' },
+  5: { menu: '毎日ルーティン＋ウォーキング or サイクリング30分', time: '50分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ ウォーキング30分 or 軽いサイクリング30分\n④ 腰痛レベル記録' },
+  6: { menu: '毎日ルーティン＋全身ライト', time: '60分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ 上半身ライト（懸垂、腕立て、ディップス 低強度）\n④ 下半身ライト（スクワット、ランジ 低強度）\n⑤ 腰痛レベル記録' },
+  0: { menu: '毎日ルーティン＋完全レスト or 散歩', time: '30分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ 完全レスト or 軽い散歩\n④ 週の振り返り\n⑤ 腰痛レベル記録' }
+};
+
+function updateToday() {
+  const now = new Date();
+  const day = now.getDay();
+  const schedule = weekSchedule[day];
+  const dayNames = ['日', '月', '火', '水', '木', '金', '土'];
+
+  document.getElementById('today-menu').textContent = schedule.menu;
+  document.getElementById('today-time').textContent = dayNames[day] + '曜日 ｜ 約' + schedule.time;
+  document.getElementById('today-detail').innerHTML = schedule.detail.replace(/\n/g, '<br>');
+}
+
+updateToday();
+</script>
+</body>
+</html>
