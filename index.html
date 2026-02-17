@@ -1,769 +1,680 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>GT Training</title>
-<style>
-:root {
-  --bg: #0a0a0f;
-  --surface: #141420;
-  --surface2: #1c1c2e;
-  --accent: #e63946;
-  --accent2: #ff6b6b;
-  --green: #2ecc71;
-  --yellow: #f1c40f;
-  --blue: #3498db;
-  --text: #f0f0f0;
-  --text2: #a0a0b0;
-  --border: #2a2a3e;
-  --radius: 12px;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.6;
-  padding-bottom: 80px;
-  overflow-x: hidden;
-}
-
-/* === HEADER === */
-.header {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  padding: 20px 16px 16px;
-  border-bottom: 2px solid var(--accent);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.header h1 {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--accent2);
-}
-.header .sub {
-  font-size: 11px;
-  color: var(--text2);
-  margin-top: 2px;
-}
-
-/* === TAB NAV === */
-.tab-nav {
-  display: flex;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 62px;
-  z-index: 99;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.tab-nav::-webkit-scrollbar { display: none; }
-.tab-btn {
-  flex: 0 0 auto;
-  padding: 10px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text2);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.tab-btn.active {
-  color: var(--accent2);
-  border-bottom-color: var(--accent);
-}
-
-/* === TAB CONTENT === */
-.tab-content { display: none; padding: 12px; }
-.tab-content.active { display: block; }
-
-/* === CARDS === */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 10px;
-  overflow: hidden;
-}
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-}
-.card-header:active { background: var(--surface2); }
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  flex: 1;
-}
-.card-badge {
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-weight: 600;
-  margin-left: 8px;
-  flex-shrink: 0;
-}
-.badge-reps { background: var(--accent); color: white; }
-.badge-time { background: var(--blue); color: white; }
-.badge-hold { background: var(--green); color: white; }
-.card-arrow {
-  margin-left: 8px;
-  font-size: 12px;
-  color: var(--text2);
-  transition: transform 0.2s;
-  flex-shrink: 0;
-}
-.card.open .card-arrow { transform: rotate(90deg); }
-.card-body {
-  display: none;
-  padding: 0 14px 14px;
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.7;
-}
-.card.open .card-body { display: block; }
-
-.card-body .step {
-  padding: 4px 0;
-  padding-left: 12px;
-  border-left: 2px solid var(--border);
-  margin-bottom: 6px;
-}
-.point {
-  background: var(--surface2);
-  border-left: 3px solid var(--yellow);
-  padding: 8px 10px;
-  margin-top: 8px;
-  border-radius: 0 6px 6px 0;
-  font-size: 12px;
-  color: var(--yellow);
-}
-
-/* === SECTION HEADER === */
-.section {
-  padding: 14px 14px 6px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent2);
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.section .icon { font-size: 16px; }
-
-/* === WEEK SCHEDULE === */
-.week-grid { padding: 0 12px; }
-.day-row {
-  display: flex;
-  align-items: flex-start;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 10px;
-}
-.day-row:last-child { border-bottom: none; }
-.day-label {
-  flex: 0 0 28px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent2);
-  padding-top: 2px;
-}
-.day-menu {
-  flex: 1;
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.5;
-}
-.day-time {
-  flex: 0 0 40px;
-  font-size: 11px;
-  color: var(--text2);
-  text-align: right;
-  padding-top: 2px;
-}
-
-/* === TODAY BANNER === */
-.today-banner {
-  background: linear-gradient(135deg, var(--accent) 0%, #c0392b 100%);
-  margin: 12px;
-  padding: 14px 16px;
-  border-radius: var(--radius);
-  text-align: center;
-}
-.today-banner .label {
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
-.today-banner .menu {
-  font-size: 15px;
-  font-weight: 700;
-  margin-top: 4px;
-}
-.today-banner .time {
-  font-size: 12px;
-  margin-top: 4px;
-  opacity: 0.8;
-}
-
-/* === QUICK VERSION === */
-.quick-list {
-  padding: 0 12px;
-}
-.quick-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 10px;
-}
-.quick-item:last-child { border-bottom: none; }
-.quick-num {
-  flex: 0 0 24px;
-  height: 24px;
-  background: var(--accent);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-}
-.quick-name { flex: 1; font-size: 13px; }
-.quick-dose {
-  font-size: 11px;
-  color: var(--text2);
-  flex-shrink: 0;
-}
-
-/* === PROTOCOL === */
-.protocol {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin: 0 12px 10px;
-  padding: 14px;
-}
-.protocol h3 {
-  font-size: 13px;
-  color: var(--accent2);
-  margin-bottom: 8px;
-}
-.protocol ul {
-  list-style: none;
-  padding: 0;
-}
-.protocol li {
-  font-size: 12px;
-  color: var(--text2);
-  padding: 3px 0 3px 16px;
-  position: relative;
-}
-.protocol li::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-}
-.red-flag {
-  background: rgba(230,57,70,0.1);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin: 8px 12px;
-}
-.red-flag h4 {
-  font-size: 12px;
-  color: var(--accent2);
-  margin-bottom: 4px;
-}
-.red-flag li {
-  font-size: 12px;
-  color: var(--accent2);
-  padding: 2px 0 2px 16px;
-  position: relative;
-  list-style: none;
-}
-.red-flag li::before {
-  content: '⚠';
-  position: absolute;
-  left: 0;
-}
-
-/* === INFO BLOCK === */
-.info-block {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin: 0 12px 10px;
-  padding: 14px;
-  font-size: 12px;
-  color: var(--text2);
-  line-height: 1.7;
-}
-.info-block h3 {
-  font-size: 13px;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-.info-block strong { color: var(--text); }
-
-/* === FOOTER === */
-.footer-msg {
-  text-align: center;
-  padding: 20px 16px;
-  font-size: 12px;
-  color: var(--text2);
-  font-style: italic;
-}
-
-/* === UPDATED INDICATOR === */
-.updated {
-  text-align: center;
-  font-size: 10px;
-  color: var(--text2);
-  padding: 8px;
-  opacity: 0.6;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GT RACER TRAINING APP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'racing-red': '#DC2626',
+            'racing-orange': '#F97316',
+            'racing-yellow': '#FBBF24',
+            'bg-dark': '#111827',
+            'bg-card': '#1F2937',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .tab-active {
+      color: #DC2626;
+    }
+    .tab-inactive {
+      color: #9CA3AF;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-slide-in {
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-pulse-once {
+      animation: pulse 0.5s ease-in-out;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-bg-dark text-white min-h-screen">
 
-<div class="header">
-  <h1>🏁 GT TRAINING</h1>
-  <div class="sub">Racer's Body Program — Boss</div>
-</div>
+  <!-- Main Container -->
+  <div id="app" class="pb-20"></div>
 
-<nav class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('today')">TODAY</button>
-  <button class="tab-btn" onclick="switchTab('routine')">DAILY</button>
-  <button class="tab-btn" onclick="switchTab('quick')">QUICK</button>
-  <button class="tab-btn" onclick="switchTab('week')">WEEK</button>
-  <button class="tab-btn" onclick="switchTab('running')">RUN</button>
-  <button class="tab-btn" onclick="switchTab('diet')">DIET</button>
-</nav>
-
-<!-- ===== TODAY TAB ===== -->
-<div id="today" class="tab-content active">
-  <div class="today-banner" id="today-banner">
-    <div class="label">TODAY'S MISSION</div>
-    <div class="menu" id="today-menu">Loading...</div>
-    <div class="time" id="today-time"></div>
-  </div>
-  <div class="section"><span class="icon">📋</span> 今日のやること</div>
-  <div class="info-block" id="today-detail"></div>
-  <div class="section"><span class="icon">📊</span> 腰痛トラッキング</div>
-  <div class="info-block">
-    <strong>起床時:</strong> ___/10<br>
-    <strong>活動後:</strong> ___/10（何をしたか）<br>
-    <strong>就寝前:</strong> ___/10<br>
-    <strong>メモ:</strong>
-  </div>
-</div>
-
-<!-- ===== DAILY ROUTINE TAB ===== -->
-<div id="routine" class="tab-content">
-  <div class="section"><span class="icon">🔧</span> PART 1: 反り腰改善（10min）</div>
-
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">1-1. キャットカウ</span>
-      <span class="card-badge badge-reps">10回</span>
-      <span class="card-arrow">▸</span>
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-bg-card border-t border-gray-700 px-4 py-3 z-50">
+    <div class="flex justify-around items-center">
+      <button onclick="showPage('home')" id="tab-home" class="flex flex-col items-center gap-1 tab-active">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        <span class="text-xs">ホーム</span>
+      </button>
+      <button onclick="showPage('progress')" id="tab-progress" class="flex flex-col items-center gap-1 tab-inactive">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        <span class="text-xs">進捗</span>
+      </button>
+      <button onclick="showPage('history')" id="tab-history" class="flex flex-col items-center gap-1 tab-inactive">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span class="text-xs">履歴</span>
+      </button>
+      <button onclick="showPage('settings')" id="tab-settings" class="flex flex-col items-center gap-1 tab-inactive">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span class="text-xs">設定</span>
+      </button>
     </div>
-    <div class="card-body">
-      <div class="step">四つん這い。息を吐きながら背中を丸める（Cat）→ 息を吸いながら反らす（Cow）</div>
-      <div class="point">💡 骨盤の動きを意識。Catで骨盤を後傾、Cowで前傾。動きの範囲を確認する。</div>
+  </nav>
+
+  <!-- EXP Gain Modal -->
+  <div id="exp-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div class="text-center animate-pulse-once">
+      <div id="exp-amount" class="text-6xl font-bold text-racing-yellow mb-4">+100 EXP!</div>
+      <div id="rank-up-msg" class="text-2xl font-bold text-white hidden">🎉 ランクアップ！</div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">1-2. デッドバグ</span>
-      <span class="card-badge badge-reps">左右10回×2</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">仰向け。両手を天井へ、両膝90度。</div>
-      <div class="step">右手を頭上へ伸ばしながら左脚を伸ばす → 戻す → 反対側</div>
-      <div class="point">💡 腰が床から浮かないこと。腰と床の間に隙間ができたらその手前で止める。これが反り腰改善の核心。</div>
-    </div>
-  </div>
+  <script>
+    // ========== DATA ==========
+    const RANKS = [
+      { rank: 'Rookie', minExp: 0, maxExp: 499, color: '#10B981', icon: '🟢' },
+      { rank: 'Amateur', minExp: 500, maxExp: 1499, color: '#3B82F6', icon: '🔵' },
+      { rank: 'Semi-Pro', minExp: 1500, maxExp: 2999, color: '#FBBF24', icon: '🟡' },
+      { rank: 'Pro', minExp: 3000, maxExp: 4999, color: '#F97316', icon: '🟠' },
+      { rank: 'Elite', minExp: 5000, maxExp: 7499, color: '#DC2626', icon: '🔴' },
+      { rank: 'Legend', minExp: 7500, maxExp: Infinity, color: '#000000', icon: '⚫' },
+    ];
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">1-3. グルートブリッジ</span>
-      <span class="card-badge badge-reps">15回×2</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">仰向け。膝を曲げ、足を床につける。</div>
-      <div class="step">お尻を持ち上げる。トップで臀筋をギュッと2秒締める。</div>
-      <div class="point">💡 腰で持ち上げない。お尻の力だけ。頂点で「お尻に力が入っている」ことを確認。</div>
-    </div>
-  </div>
+    const WEEK1_MISSIONS = [
+      {
+        date: '2026-02-18',
+        dayNumber: 1,
+        dayName: 'LOWER POWER',
+        missions: [
+          {
+            id: 'm1-req1',
+            type: 'required1',
+            title: '必須1: モビリティルーティン',
+            description: '反り腰改善 + 左肩リハビリ',
+            duration: '10-15分',
+            exp: 50,
+            exercises: [
+              { name: 'キャットカウ', detail: '10回' },
+              { name: 'デッドバグ', detail: '左右10回×2セット' },
+              { name: 'グルートブリッジ', detail: '15回×2セット' },
+              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
+              { name: 'クラムシェル', detail: '左右15回×2セット' }
+            ]
+          },
+          {
+            id: 'm1-req2',
+            type: 'required2',
+            title: '必須2: 下半身パワー + 体幹',
+            description: 'グルートブリッジ、ブルガリアンスクワット、プランク',
+            duration: '20分',
+            exp: 100,
+            exercises: [
+              { name: 'グルートブリッジ強化版', detail: '20回×3セット' },
+              { name: 'ブルガリアンスクワット', detail: '左右12回×3セット' },
+              { name: 'カーフレイズ', detail: '20回×3セット' },
+              { name: 'プランク', detail: '3分×2セット' },
+              { name: 'レッグレイズ', detail: '15回×3セット' }
+            ]
+          },
+          {
+            id: 'm1-bonus',
+            type: 'bonus',
+            title: 'ボーナス: 追加HIIT',
+            description: 'タバタ式マウンテンクライマー',
+            duration: '3分',
+            exp: 50,
+            exercises: [
+              { name: 'マウンテンクライマー', detail: '20秒全力 / 10秒休憩 × 4ラウンド' }
+            ]
+          }
+        ]
+      },
+      {
+        date: '2026-02-19',
+        dayNumber: 2,
+        dayName: 'ZONE 2 CARDIO',
+        missions: [
+          {
+            id: 'm2-req1',
+            type: 'required1',
+            title: '必須1: モビリティルーティン',
+            description: '反り腰改善 + 左肩リハビリ',
+            duration: '10-15分',
+            exp: 50,
+            exercises: [
+              { name: 'キャットカウ', detail: '10回' },
+              { name: 'デッドバグ', detail: '左右10回×2セット' },
+              { name: 'グルートブリッジ', detail: '15回×2セット' },
+              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
+              { name: 'クラムシェル', detail: '左右15回×2セット' }
+            ]
+          },
+          {
+            id: 'm2-req2',
+            type: 'required2',
+            title: '必須2: サイクリング Zone 2',
+            description: '心拍110-130bpm',
+            duration: '40-50分',
+            exp: 100,
+            exercises: [
+              { name: 'サイクリング', detail: 'Zone 2、40-50分' }
+            ]
+          },
+          {
+            id: 'm2-bonus',
+            type: 'bonus',
+            title: 'ボーナス: 追加10分延長',
+            description: '合計60分',
+            duration: '10分',
+            exp: 50,
+            exercises: [
+              { name: 'サイクリング延長', detail: '+10分（合計60分）' }
+            ]
+          }
+        ]
+      },
+      {
+        date: '2026-02-20',
+        dayNumber: 3,
+        dayName: 'UPPER + NECK',
+        missions: [
+          {
+            id: 'm3-req1',
+            type: 'required1',
+            title: '必須1: モビリティルーティン',
+            description: '反り腰改善 + 左肩リハビリ',
+            duration: '10-15分',
+            exp: 50,
+            exercises: [
+              { name: 'キャットカウ', detail: '10回' },
+              { name: 'デッドバグ', detail: '左右10回×2セット' },
+              { name: 'グルートブリッジ', detail: '15回×2セット' }
+            ]
+          },
+          {
+            id: 'm3-req2',
+            type: 'required2',
+            title: '必須2: 上半身筋力 + 首G強化',
+            description: '懸垂、腕立て、首トレ',
+            duration: '20分',
+            exp: 100,
+            exercises: [
+              { name: '懸垂', detail: '3回×3セット' },
+              { name: '腕立て伏せ', detail: '20回×3セット' },
+              { name: 'ニーレイズ', detail: '15回×3セット' },
+              { name: '首Gフォース対策', detail: 'アイソメトリック各方向10秒×3' }
+            ]
+          },
+          {
+            id: 'm3-bonus',
+            type: 'bonus',
+            title: 'ボーナス: 首Gフォース強化',
+            description: '追加5分',
+            duration: '5分',
+            exp: 50,
+            exercises: [
+              { name: 'レジスタンスバンド首トレ', detail: '各方向15回' }
+            ]
+          }
+        ]
+      }
+    ];
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">1-4. 腸腰筋ストレッチ</span>
-      <span class="card-badge badge-hold">左右30秒×2</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">片膝立ち（後ろの膝が床につく）。</div>
-      <div class="step">骨盤を後傾させた状態（おへそを上に向けるイメージ）で、体を前方へスライド。</div>
-      <div class="step">股関節前面（腸腰筋）が伸びるのを感じる。</div>
-      <div class="point">💡 腰を反らさない。反ったら腸腰筋ではなく腰が伸びるだけでNG。</div>
-    </div>
-  </div>
+    // ========== STATE MANAGEMENT ==========
+    let appData = {
+      profile: {
+        name: 'Boss',
+        startDate: '2026-02-18',
+        currentRank: 'Rookie',
+        totalExp: 0,
+        currentStreak: 0,
+        longestStreak: 0
+      },
+      history: []
+    };
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">1-5. クラムシェル</span>
-      <span class="card-badge badge-reps">左右15回×2</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">横向きに寝る。膝を90度に曲げ、足は重ねたまま。</div>
-      <div class="step">上の膝を開く（貝殻が開くように）→ ゆっくり戻す。</div>
-      <div class="point">💡 骨盤が後ろに倒れないよう固定。お尻の横（中臀筋）に効いていればOK。ランナーズニー予防にも直結。</div>
-    </div>
-  </div>
+    function loadData() {
+      const saved = localStorage.getItem('gt-racer-app-data');
+      if (saved) {
+        appData = JSON.parse(saved);
+      }
+    }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">1-6. チャイルドポーズ＋ラットストレッチ</span>
-      <span class="card-badge badge-hold">計90秒</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">正座から両手を前方に伸ばし、額を床に近づける（チャイルドポーズ）。</div>
-      <div class="step">両手を右斜め前にずらす → 左の脇腹〜背中の伸びを感じる。30秒。</div>
-      <div class="step">反対側も同様。30秒。</div>
-      <div class="step">中央に戻し、手のひらを上に向けて（外旋）さらに遠くへ伸ばす。30秒。</div>
-      <div class="point">💡 「両手を組んで上に伸ばせない」原因の本丸。お尻がかかとから浮かないように。吐くたびに少し遠くへ。</div>
-    </div>
-  </div>
+    function saveData() {
+      localStorage.setItem('gt-racer-app-data', JSON.stringify(appData));
+    }
 
-  <div class="section"><span class="icon">💪</span> PART 2: 左肩リハビリ（5min）</div>
+    function getTodayMissions() {
+      const today = new Date().toISOString().split('T')[0];
+      return WEEK1_MISSIONS.find(m => m.date === today) || WEEK1_MISSIONS[0];
+    }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">2-1. ペンデュラム</span>
-      <span class="card-badge badge-reps">各10回</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">テーブルに右手をつき、上体を前傾。左腕をだらんと垂らす。</div>
-      <div class="step">小さく円を描く（時計回り10回→反時計回り10回）</div>
-      <div class="step">前後に振る（10回）、左右に振る（10回）</div>
-      <div class="point">💡 力を完全に抜く。重力と慣性だけで動かす。</div>
-    </div>
-  </div>
+    function getTodayRecord() {
+      const today = new Date().toISOString().split('T')[0];
+      return appData.history.find(h => h.date === today);
+    }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">2-2. ウォールスライド</span>
-      <span class="card-badge badge-reps">10回</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">壁に背中をつけて立つ。両腕を壁につけ、肘90度（「降参」のポーズ）。</div>
-      <div class="step">壁から離さないように両手を頭上へスライド → 戻す。</div>
-      <div class="point">💡 左腕は上がるところまででOK。毎日少しずつ。</div>
-    </div>
-  </div>
+    function isMissionCompleted(missionId) {
+      const record = getTodayRecord();
+      return record?.completions.some(c => c.missionId === missionId) || false;
+    }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">2-3. クロスボディストレッチ</span>
-      <span class="card-badge badge-hold">30秒</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">左腕をまっすぐ前に伸ばし、右手で左肘を持ち、体の右側に引き寄せる。</div>
-      <div class="point">💡 肩後面のストレッチ。痛みなく心地よい伸びを感じるところで。</div>
-    </div>
-  </div>
+    function getRankByExp(exp) {
+      for (const rank of RANKS) {
+        if (exp >= rank.minExp && exp <= rank.maxExp) {
+          return rank.rank;
+        }
+      }
+      return 'Rookie';
+    }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">2-4. タオルストレッチ ⭐</span>
-      <span class="card-badge badge-hold">20秒×3</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">タオルの一端を右手で頭の後ろから持ち、もう一端を左手で腰の後ろから掴む。</div>
-      <div class="step">右手でタオルをゆっくり引き上げ、左手を上方へ誘導する。</div>
-      <div class="point">💡 左肩の可動域を直接改善するキーエクササイズ。焦らない。1ヶ月で1-2cm上がれば大成功。</div>
-    </div>
-  </div>
+    function getNextRankInfo(currentExp) {
+      const currentRank = RANKS.find(r => currentExp >= r.minExp && currentExp <= r.maxExp);
+      const currentIndex = RANKS.findIndex(r => r.rank === currentRank?.rank);
+      const nextRank = RANKS[currentIndex + 1];
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">2-5. エクスターナルローテーション</span>
-      <span class="card-badge badge-reps">左右15回</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">肘を体側に固定し、90度に曲げる。</div>
-      <div class="step">前腕を外側に回す（ドアを開ける動作）。</div>
-      <div class="step">可能なら軽い抵抗（ゴムチューブ or タオル）</div>
-      <div class="point">💡 肩のローテーターカフ強化。左肩は痛みのない範囲で。</div>
-    </div>
-  </div>
+      if (!nextRank) {
+        return { nextRank: 'Legend', nextRankExp: Infinity, progress: 100 };
+      }
 
-  <div class="section"><span class="icon">🧠</span> PART 3: 首・肩・胸椎（5min）</div>
+      const progress = ((currentExp - currentRank.minExp) / (nextRank.minExp - currentRank.minExp)) * 100;
+      return {
+        nextRank: nextRank.rank,
+        nextRankExp: nextRank.minExp,
+        progress: Math.min(Math.round(progress), 100)
+      };
+    }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">3-1. 首の4方向ストレッチ</span>
-      <span class="card-badge badge-hold">計2分</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">右へ倒す（右耳→右肩）→ 30秒</div>
-      <div class="step">左へ倒す → 30秒</div>
-      <div class="step">右へ回旋 → 15秒 → 左へ回旋 → 15秒</div>
-      <div class="step">顎を胸に近づける（前屈）→ 15秒</div>
-      <div class="point">💡 右回旋・左回旋はレーシング中のミラー確認動作そのもの。</div>
-    </div>
-  </div>
+    function completeMission(missionId, exp) {
+      const today = new Date().toISOString().split('T')[0];
+      const todayRecord = getTodayRecord();
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">3-2. チンタック</span>
-      <span class="card-badge badge-hold">10秒×5</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">壁に背をつけて立つ。顎を引いて後頭部を壁に押しつける。</div>
-      <div class="point">💡 二重あごを作るイメージ。デスクワークで前に出た頭の位置をリセット。</div>
-    </div>
-  </div>
+      if (!todayRecord) {
+        appData.history.push({
+          date: today,
+          completions: [{ missionId, exp, completedAt: new Date().toISOString() }],
+          totalExp: exp,
+          isPerfectDay: false
+        });
+      } else {
+        if (!todayRecord.completions.some(c => c.missionId === missionId)) {
+          todayRecord.completions.push({ missionId, exp, completedAt: new Date().toISOString() });
+          todayRecord.totalExp += exp;
+        }
+      }
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">3-3. 胸椎回旋</span>
-      <span class="card-badge badge-reps">左右10回</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">四つん這い。右手を後頭部に当てる。</div>
-      <div class="step">右肘を左肘に向かって下ろす → 天井に向かって開く。</div>
-      <div class="point">💡 腰ではなく胸の高さで回る。レーシングポジションでの上体のしなやかさに直結。</div>
-    </div>
-  </div>
+      const oldRank = appData.profile.currentRank;
+      appData.profile.totalExp += exp;
+      appData.profile.currentRank = getRankByExp(appData.profile.totalExp);
+      const rankUp = oldRank !== appData.profile.currentRank;
 
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="card-title">3-4. ドアフレーム胸筋ストレッチ</span>
-      <span class="card-badge badge-hold">30秒×2</span>
-      <span class="card-arrow">▸</span>
-    </div>
-    <div class="card-body">
-      <div class="step">ドアフレームに両手をつき（肘90度の高さ）、一歩前に出て胸を開く。</div>
-      <div class="point">💡 デスクワークで縮まった胸筋を開放。肩甲骨が寄せられる感覚があればOK。</div>
-    </div>
-  </div>
-</div>
+      saveData();
+      showExpModal(exp, rankUp);
+      return rankUp;
+    }
 
-<!-- ===== QUICK VERSION TAB ===== -->
-<div id="quick" class="tab-content">
-  <div class="section"><span class="icon">⚡</span> 時間がない日の最低限（10min）</div>
-  <div class="quick-list">
-    <div class="quick-item"><span class="quick-num">1</span><span class="quick-name">キャットカウ</span><span class="quick-dose">10回 / 1分</span></div>
-    <div class="quick-item"><span class="quick-num">2</span><span class="quick-name">デッドバグ</span><span class="quick-dose">左右10回 / 2分</span></div>
-    <div class="quick-item"><span class="quick-num">3</span><span class="quick-name">グルートブリッジ</span><span class="quick-dose">15回 / 1分</span></div>
-    <div class="quick-item"><span class="quick-num">4</span><span class="quick-name">腸腰筋ストレッチ</span><span class="quick-dose">左右30秒 / 2分</span></div>
-    <div class="quick-item"><span class="quick-num">5</span><span class="quick-name">タオルストレッチ</span><span class="quick-dose">20秒×2 / 1分</span></div>
-    <div class="quick-item"><span class="quick-num">6</span><span class="quick-name">首4方向</span><span class="quick-dose">各方向 / 2分</span></div>
-    <div class="quick-item"><span class="quick-num">7</span><span class="quick-name">チンタック</span><span class="quick-dose">10秒×3 / 1分</span></div>
-  </div>
-  <div class="footer-msg">どんなに忙しくても、これだけはやる。</div>
-</div>
+    function showExpModal(exp, rankUp) {
+      const modal = document.getElementById('exp-modal');
+      const expAmount = document.getElementById('exp-amount');
+      const rankUpMsg = document.getElementById('rank-up-msg');
 
-<!-- ===== WEEK SCHEDULE TAB ===== -->
-<div id="week" class="tab-content">
+      expAmount.textContent = `+${exp} EXP!`;
+      rankUpMsg.classList.toggle('hidden', !rankUp);
 
-  <div class="section"><span class="icon">🔥</span> WEEK 1: IGNITION（2/9-2/15）</div>
-  <div class="info-block">強度 40-50% ｜ 反り腰改善に全振り＋身体を動かす習慣を取り戻す</div>
-  <div class="week-grid">
-    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋ウォーキング30分</span><span class="day-time">50分</span></div>
-    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身ライト（懸垂50%、腕立て50%）＋体幹</span><span class="day-time">50分</span></div>
-    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 40-50分</span><span class="day-time">70分</span></div>
-    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身アクティベーション（グルートブリッジ、クラムシェル中心）</span><span class="day-time">50分</span></div>
-    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋ウォーキング30分 or 軽いサイクリング30分</span><span class="day-time">50分</span></div>
-    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋全身ライト（上半身＋下半身を低強度で通す）</span><span class="day-time">60分</span></div>
-    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋完全レスト or 散歩</span><span class="day-time">30分</span></div>
-  </div>
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        showPage(currentPage);
+      }, 2000);
+    }
 
-  <div class="section"><span class="icon">🏎️</span> WEEK 2: WARM-UP LAP（2/16-2/22）</div>
-  <div class="info-block">強度 60-70% ｜ トレーニング構造を戻す。反り腰ルーティン継続。</div>
-  <div class="week-grid">
-    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋レスト or 軽いウォーキング</span><span class="day-time">30分</span></div>
-    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身（懸垂70%、ディップス、腕立て）＋首強化＋体幹</span><span class="day-time">55分</span></div>
-    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 60分</span><span class="day-time">80分</span></div>
-    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身パワー（ブルガリアンSQ、カーフレイズ）＋体幹</span><span class="day-time">55分</span></div>
-    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋軽めHIIT（タバタ式4分×1セット）or サイクリング40分</span><span class="day-time">55分</span></div>
-    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 70-90分</span><span class="day-time">110分</span></div>
-    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋モビリティ重視（ヨガ的フロー）</span><span class="day-time">40分</span></div>
-  </div>
+    // ========== UI RENDERING ==========
+    let currentPage = 'home';
 
-  <div class="section"><span class="icon">🏁</span> WEEK 3: QUALIFYING（2/23-3/1）</div>
-  <div class="info-block">強度 75-85% ｜ ほぼ通常構造に復帰。ランニング短時間再導入。</div>
-  <div class="week-grid">
-    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋レスト</span><span class="day-time">25分</span></div>
-    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身筋力（フルセット）＋首Gフォース＋体幹</span><span class="day-time">60分</span></div>
-    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング 80-90分</span><span class="day-time">110分</span></div>
-    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身パワー（プライオ導入）＋体幹</span><span class="day-time">60分</span></div>
-    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋HIIT（タバタ4分×2）＋ジョグ15分（フォーム意識）</span><span class="day-time">55分</span></div>
-    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋ロングライド90-120分 or ランニング30分</span><span class="day-time">120分</span></div>
-    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋モビリティ＋軽い有酸素</span><span class="day-time">40分</span></div>
-  </div>
+    function showPage(page) {
+      currentPage = page;
 
-  <div class="section"><span class="icon">🏆</span> WEEK 4: RACE PACE（3/2-3/8）</div>
-  <div class="info-block">強度 90-100% ｜ Phase 2フルプログラムに完全復帰</div>
-  <div class="week-grid">
-    <div class="day-row"><span class="day-label">月</span><span class="day-menu">毎日ルーティン＋完全レスト</span><span class="day-time">25分</span></div>
-    <div class="day-row"><span class="day-label">火</span><span class="day-menu">毎日ルーティン＋上半身筋力＋首Gフォース＋体幹</span><span class="day-time">60分</span></div>
-    <div class="day-row"><span class="day-label">水</span><span class="day-menu">毎日ルーティン＋Zone 2サイクリング90-120分</span><span class="day-time">120分</span></div>
-    <div class="day-row"><span class="day-label">木</span><span class="day-menu">毎日ルーティン＋下半身パワー＋プライオメトリクス＋体幹</span><span class="day-time">60分</span></div>
-    <div class="day-row"><span class="day-label">金</span><span class="day-menu">毎日ルーティン＋HIIT（タバタ式高強度）or 実車練習</span><span class="day-time">55分</span></div>
-    <div class="day-row"><span class="day-label">土</span><span class="day-menu">毎日ルーティン＋ロングライド120分 or ランニング40-60分</span><span class="day-time">140分</span></div>
-    <div class="day-row"><span class="day-label">日</span><span class="day-menu">毎日ルーティン＋モビリティ＋軽い有酸素</span><span class="day-time">40分</span></div>
-  </div>
-</div>
+      // Update tabs
+      ['home', 'progress', 'history', 'settings'].forEach(tab => {
+        const el = document.getElementById(`tab-${tab}`);
+        if (tab === page) {
+          el.classList.remove('tab-inactive');
+          el.classList.add('tab-active');
+        } else {
+          el.classList.remove('tab-active');
+          el.classList.add('tab-inactive');
+        }
+      });
 
-<!-- ===== RUNNING TAB ===== -->
-<div id="running" class="tab-content">
-  <div class="section"><span class="icon">🏃</span> ランニング再導入プロトコル</div>
+      // Render page
+      const app = document.getElementById('app');
+      if (page === 'home') app.innerHTML = renderHomePage();
+      else if (page === 'progress') app.innerHTML = renderProgressPage();
+      else if (page === 'history') app.innerHTML = renderHistoryPage();
+      else if (page === 'settings') app.innerHTML = renderSettingsPage();
+    }
 
-  <div class="protocol">
-    <h3>Step 1（Week 3）: ジョグ15分のみ</h3>
-    <ul>
-      <li>着地はミッドフット（かかと着地NG）</li>
-      <li>ケイデンス170-180spm（小刻みに）</li>
-      <li>体幹を意識し骨盤を安定（反り腰→膝負荷増大）</li>
-      <li>走行前にVMO活性化（ターミナルニーエクステンション3×15）</li>
-    </ul>
-  </div>
+    function renderHomePage() {
+      const todayMissions = getTodayMissions();
+      const nextRankInfo = getNextRankInfo(appData.profile.totalExp);
+      const rankInfo = RANKS.find(r => r.rank === appData.profile.currentRank);
 
-  <div class="protocol">
-    <h3>Step 2（Week 4）: 30分まで延長</h3>
-    <ul>
-      <li>5分ごとにフォームチェック</li>
-    </ul>
-  </div>
+      return `
+        <div class="px-4 pt-6 animate-slide-in">
+          <!-- Rank & EXP -->
+          <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
+            <div class="flex justify-center mb-4">
+              <div class="inline-flex items-center gap-2 text-white font-bold py-2 px-4 rounded-full shadow-lg" style="background-color: ${rankInfo.color}">
+                <span class="text-2xl">${rankInfo.icon}</span>
+                <span>${rankInfo.rank}</span>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="flex justify-between text-sm text-gray-400 mb-1">
+                <span>${appData.profile.totalExp} EXP</span>
+                <span>${nextRankInfo.nextRankExp === Infinity ? appData.profile.totalExp : nextRankInfo.nextRankExp} EXP</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                <div class="bg-gradient-to-r from-racing-red to-racing-orange h-full transition-all duration-500" style="width: ${nextRankInfo.progress}%"></div>
+              </div>
+              <div class="text-center text-sm text-gray-400 mt-1">${nextRankInfo.progress}%</div>
+            </div>
+            <p class="text-center text-sm text-gray-400 mt-2">
+              次のランク（${nextRankInfo.nextRank}）まで ${nextRankInfo.nextRankExp === Infinity ? 0 : nextRankInfo.nextRankExp - appData.profile.totalExp} EXP
+            </p>
+          </div>
 
-  <div class="protocol">
-    <h3>Step 3（Week 5以降）: 40-60分</h3>
-    <ul>
-      <li>問題なければ週2回まで増やす</li>
-    </ul>
-  </div>
+          <!-- Today's Missions -->
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold text-white mb-2">
+              Day ${todayMissions.dayNumber}: ${todayMissions.dayName}
+            </h2>
+            <p class="text-sm text-gray-400 mb-4">${todayMissions.date}</p>
 
-  <div class="red-flag">
-    <h4>🚩 レッドフラグ（即中止）</h4>
-    <ul>
-      <li>膝外側にピリッとした痛み</li>
-      <li>走行中に痛みが増悪する</li>
-      <li>翌日に膝の腫れや熱感</li>
-    </ul>
-  </div>
-</div>
+            <div class="space-y-4">
+              ${todayMissions.missions.map(mission => renderMissionCard(mission)).join('')}
+            </div>
+          </div>
 
-<!-- ===== DIET TAB ===== -->
-<div id="diet" class="tab-content">
-  <div class="section"><span class="icon">🍽️</span> 食事の方針（復帰期間）</div>
+          <!-- Complete All Button -->
+          <button onclick="completeAllMissions()" class="w-full bg-racing-red hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all duration-200 active:scale-95">
+            全ミッション完了
+          </button>
+        </div>
+      `;
+    }
 
-  <div class="info-block">
-    <h3>タンパク質</h3>
-    体重×1.6-2.0g/日 = <strong>106-133g/日</strong>が目標。筋肉の再活性化のため通常より多め。
-  </div>
+    function renderMissionCard(mission) {
+      const isCompleted = isMissionCompleted(mission.id);
+      const borderColor = mission.type === 'required1' ? 'border-racing-red' : mission.type === 'required2' ? 'border-racing-orange' : 'border-racing-yellow';
 
-  <div class="info-block">
-    <h3>カーボサイクル</h3>
-    トレーニング日は白米・十六穀米をしっかり。レスト日は控えめ。
-  </div>
+      return `
+        <div class="bg-bg-card rounded-lg p-4 shadow-lg border-l-4 ${borderColor} ${isCompleted ? 'opacity-50' : ''}">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h3 class="text-lg font-bold text-white">${mission.title}</h3>
+              <p class="text-sm text-gray-400">${mission.description}</p>
+            </div>
+            ${isCompleted ? '<span class="text-2xl">✅</span>' : ''}
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex gap-4 text-sm text-gray-400">
+              <span>⏱️ ${mission.duration}</span>
+              <span class="text-racing-yellow font-semibold">${mission.exp} EXP</span>
+            </div>
+            <button onclick="toggleMissionDetail('${mission.id}')" class="text-racing-red hover:text-red-400 transition-colors text-sm font-medium">
+              詳細 ▼
+            </button>
+          </div>
+          <div id="detail-${mission.id}" class="hidden mt-4 border-t border-gray-700 pt-4">
+            ${mission.exercises.map(ex => `
+              <div class="mb-2">
+                <p class="text-white font-medium">${ex.name}</p>
+                <p class="text-sm text-gray-400">${ex.detail}</p>
+              </div>
+            `).join('')}
+            ${!isCompleted ? `<button onclick="completeSingleMission('${mission.id}', ${mission.exp})" class="mt-4 w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">このミッション完了</button>` : ''}
+          </div>
+        </div>
+      `;
+    }
 
-  <div class="info-block">
-    <h3>胃腸ケア（毎日必須）</h3>
-    <strong>納豆＋ビオフェルミンSプラス</strong><br>
-    インフル後は腸内環境がリセットされている可能性あり。
-  </div>
+    function renderProgressPage() {
+      const rankInfo = RANKS.find(r => r.rank === appData.profile.currentRank);
+      const nextRankInfo = getNextRankInfo(appData.profile.totalExp);
 
-  <div class="info-block">
-    <h3>復帰期に意識する食材</h3>
-    <strong>抗炎症:</strong> ターメリック、生姜、青魚（サバ・サーモン）、ブルーベリー<br>
-    <strong>コラーゲン生成:</strong> ビタミンC（ミカン）、ゼラチン質（鶏手羽・豚足系スープ）<br>
-    <strong>マグネシウム:</strong> ナッツ、豆腐、ほうれん草
-  </div>
+      return `
+        <div class="px-4 pt-6 animate-slide-in">
+          <h2 class="text-3xl font-bold text-white mb-6">進捗</h2>
 
-  <div class="info-block">
-    <h3>朝のルーティン</h3>
-    <strong>無調整ソイラテ 500ml</strong>（約200kcal / タンパク質18g）→ トレーニング前の燃料
-  </div>
-</div>
+          <!-- Total EXP & Rank -->
+          <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
+            <h3 class="text-xl font-bold text-white mb-4">累計EXP</h3>
+            <div class="text-5xl font-bold text-racing-yellow text-center mb-6">
+              ${appData.profile.totalExp} EXP
+            </div>
 
-<div class="updated">Last updated: 2026-02-08</div>
+            <h3 class="text-xl font-bold text-white mb-4">現在のランク</h3>
+            <div class="flex justify-center mb-6">
+              <div class="inline-flex items-center gap-2 text-white font-bold py-3 px-6 rounded-full shadow-lg text-xl" style="background-color: ${rankInfo.color}">
+                <span class="text-3xl">${rankInfo.icon}</span>
+                <span>${rankInfo.rank}</span>
+              </div>
+            </div>
 
-<script>
-function switchTab(tabId) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  event.target.classList.add('active');
-  window.scrollTo(0, 0);
-}
+            <h3 class="text-xl font-bold text-white mb-4">次のランクまで</h3>
+            <div class="mb-2">
+              <div class="flex justify-between text-sm text-gray-400 mb-1">
+                <span>${appData.profile.totalExp} EXP</span>
+                <span>${nextRankInfo.nextRankExp === Infinity ? appData.profile.totalExp : nextRankInfo.nextRankExp} EXP</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                <div class="bg-gradient-to-r from-racing-red to-racing-orange h-full transition-all duration-500" style="width: ${nextRankInfo.progress}%"></div>
+              </div>
+              <div class="text-center text-sm text-gray-400 mt-1">${nextRankInfo.progress}%</div>
+            </div>
+          </div>
 
-function toggleCard(header) {
-  header.parentElement.classList.toggle('open');
-}
+          <!-- Streak -->
+          <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
+            <h3 class="text-xl font-bold text-white mb-4">連続達成日数</h3>
+            <div class="text-4xl font-bold text-racing-orange text-center mb-2">
+              🔥 ${appData.profile.currentStreak}日連続
+            </div>
+            <p class="text-center text-gray-400">最長: ${appData.profile.longestStreak}日</p>
+          </div>
+        </div>
+      `;
+    }
 
-// Today's schedule logic
-const weekSchedule = {
-  1: { menu: '毎日ルーティン＋ウォーキング30分', time: '50分', detail: '① ソイラテ500ml\n② 体重測定\n③ 毎日ルーティン（25分）\n④ ウォーキング30分（腰痛の出方を観察）\n⑤ 腰痛レベル記録' },
-  2: { menu: '毎日ルーティン＋上半身ライト＋体幹', time: '50分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ 懸垂（50%の回数）\n④ 腕立て伏せ（50%の回数）\n⑤ ニーレイズ or プランク\n⑥ 腰痛レベル記録' },
-  3: { menu: '毎日ルーティン＋Zone 2サイクリング 40-50分', time: '70分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ Zone 2サイクリング 40-50分（HR 100-120bpm）\n④ 腰痛レベル記録' },
-  4: { menu: '毎日ルーティン＋下半身アクティベーション', time: '50分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ グルートブリッジ 追加セット\n④ クラムシェル 追加セット\n⑤ カーフレイズ\n⑥ 腰痛レベル記録' },
-  5: { menu: '毎日ルーティン＋ウォーキング or サイクリング30分', time: '50分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ ウォーキング30分 or 軽いサイクリング30分\n④ 腰痛レベル記録' },
-  6: { menu: '毎日ルーティン＋全身ライト', time: '60分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ 上半身ライト（懸垂、腕立て、ディップス 低強度）\n④ 下半身ライト（スクワット、ランジ 低強度）\n⑤ 腰痛レベル記録' },
-  0: { menu: '毎日ルーティン＋完全レスト or 散歩', time: '30分', detail: '① ソイラテ500ml\n② 毎日ルーティン（25分）\n③ 完全レスト or 軽い散歩\n④ 週の振り返り\n⑤ 腰痛レベル記録' }
-};
+    function renderHistoryPage() {
+      const sortedHistory = [...appData.history].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-function updateToday() {
-  const now = new Date();
-  const day = now.getDay();
-  const schedule = weekSchedule[day];
-  const dayNames = ['日', '月', '火', '水', '木', '金', '土'];
+      return `
+        <div class="px-4 pt-6 animate-slide-in">
+          <h2 class="text-3xl font-bold text-white mb-6">履歴</h2>
 
-  document.getElementById('today-menu').textContent = schedule.menu;
-  document.getElementById('today-time').textContent = dayNames[day] + '曜日 ｜ 約' + schedule.time;
-  document.getElementById('today-detail').innerHTML = schedule.detail.replace(/\n/g, '<br>');
-}
+          ${sortedHistory.length === 0 ? '<p class="text-gray-400 text-center">まだ記録がありません</p>' : ''}
 
-updateToday();
-</script>
+          <div class="space-y-4">
+            ${sortedHistory.map(record => {
+              const dayMission = WEEK1_MISSIONS.find(m => m.date === record.date);
+              return `
+                <div class="bg-bg-card rounded-lg p-4 shadow-lg">
+                  <div class="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 class="text-lg font-bold text-white">${record.date} ${dayMission ? `(Day ${dayMission.dayNumber})` : ''}</h3>
+                      ${dayMission ? `<p class="text-sm text-gray-400">${dayMission.dayName}</p>` : ''}
+                    </div>
+                    ${record.isPerfectDay ? '<span class="text-2xl">🎉</span>' : ''}
+                  </div>
+                  <div class="space-y-1 mb-2">
+                    ${record.completions.map(c => `
+                      <p class="text-sm text-green-400">✅ ${c.missionId} (+${c.exp})</p>
+                    `).join('')}
+                  </div>
+                  ${record.isPerfectDay ? '<p class="text-racing-yellow font-bold">Perfect Day!</p>' : ''}
+                  <p class="text-white font-semibold mt-2">合計: +${record.totalExp} EXP</p>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSettingsPage() {
+      return `
+        <div class="px-4 pt-6 animate-slide-in">
+          <h2 class="text-3xl font-bold text-white mb-6">設定</h2>
+
+          <!-- Profile -->
+          <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
+            <h3 class="text-xl font-bold text-white mb-4">プロファイル</h3>
+            <p class="text-gray-400 mb-2">名前: <span class="text-white">${appData.profile.name}</span></p>
+            <p class="text-gray-400 mb-2">開始日: <span class="text-white">${appData.profile.startDate}</span></p>
+          </div>
+
+          <!-- Data Management -->
+          <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
+            <h3 class="text-xl font-bold text-white mb-4">データ管理</h3>
+            <button onclick="exportData()" class="w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg mb-3 transition-all">
+              データをエクスポート
+            </button>
+            <button onclick="importData()" class="w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg mb-3 transition-all">
+              データをインポート
+            </button>
+            <button onclick="resetData()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all">
+              データをリセット
+            </button>
+          </div>
+
+          <!-- App Info -->
+          <div class="bg-bg-card rounded-lg p-6 shadow-lg">
+            <h3 class="text-xl font-bold text-white mb-4">アプリ情報</h3>
+            <p class="text-gray-400">バージョン: 1.0.0</p>
+            <p class="text-gray-400 mt-2">GT RACER TRAINING APP</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // ========== ACTIONS ==========
+    function toggleMissionDetail(missionId) {
+      const detail = document.getElementById(`detail-${missionId}`);
+      detail.classList.toggle('hidden');
+    }
+
+    function completeSingleMission(missionId, exp) {
+      if (isMissionCompleted(missionId)) {
+        alert('このミッションは既に完了しています！');
+        return;
+      }
+      completeMission(missionId, exp);
+    }
+
+    function completeAllMissions() {
+      const todayMissions = getTodayMissions();
+      let totalExp = 0;
+      let completedCount = 0;
+
+      for (const mission of todayMissions.missions) {
+        if (!isMissionCompleted(mission.id)) {
+          completeMission(mission.id, mission.exp);
+          totalExp += mission.exp;
+          completedCount++;
+        }
+      }
+
+      if (completedCount === 0) {
+        alert('今日のミッション全て完了済みです！');
+        return;
+      }
+
+      // Perfect Day bonus
+      if (completedCount === todayMissions.missions.filter(m => m.type !== 'bonus').length) {
+        completeMission('perfect-day-bonus', 50);
+        totalExp += 50;
+      }
+    }
+
+    function exportData() {
+      const dataStr = JSON.stringify(appData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'gt-racer-data-backup.json';
+      a.click();
+      alert('データをエクスポートしました！');
+    }
+
+    function importData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/json';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            appData = JSON.parse(event.target.result);
+            saveData();
+            alert('データをインポートしました！');
+            showPage(currentPage);
+          } catch (err) {
+            alert('エラー: 無効なファイルです');
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    function resetData() {
+      if (confirm('本当にデータをリセットしますか？この操作は取り消せません。')) {
+        localStorage.removeItem('gt-racer-app-data');
+        appData = {
+          profile: {
+            name: 'Boss',
+            startDate: '2026-02-18',
+            currentRank: 'Rookie',
+            totalExp: 0,
+            currentStreak: 0,
+            longestStreak: 0
+          },
+          history: []
+        };
+        saveData();
+        alert('データをリセットしました');
+        showPage('home');
+      }
+    }
+
+    // ========== INITIALIZATION ==========
+    loadData();
+    showPage('home');
+  </script>
 </body>
 </html>
