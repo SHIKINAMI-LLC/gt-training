@@ -21,64 +21,23 @@
     }
   </script>
   <style>
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
     .tab-active { color: #DC2626; }
     .tab-inactive { color: #9CA3AF; }
-    @keyframes slideIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .animate-slide-in { animation: slideIn 0.3s ease-out; }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
     .animate-pulse-once { animation: pulse 0.5s ease-in-out; }
-    .science-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #1e3a5f, #0f2027);
-      border: 1px solid #2563eb;
-      color: #93c5fd;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-top: 4px;
-    }
-    .f1-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #7f1d1d, #450a0a);
-      border: 1px solid #DC2626;
-      color: #fca5a5;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-top: 4px;
-      margin-left: 4px;
-    }
-    .safety-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #14532d, #052e16);
-      border: 1px solid #16a34a;
-      color: #86efac;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-top: 4px;
-      margin-left: 4px;
-    }
-    .new-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #4c1d95, #2e1065);
-      border: 1px solid #7c3aed;
-      color: #c4b5fd;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-top: 4px;
-      margin-left: 4px;
-    }
+    .science-badge { display:inline-block; background:linear-gradient(135deg,#1e3a5f,#0f2027); border:1px solid #2563eb; color:#93c5fd; font-size:10px; padding:2px 6px; border-radius:4px; margin-top:4px; }
+    .f1-badge { display:inline-block; background:linear-gradient(135deg,#7f1d1d,#450a0a); border:1px solid #DC2626; color:#fca5a5; font-size:10px; padding:2px 6px; border-radius:4px; margin-top:4px; margin-left:4px; }
+    .safety-badge { display:inline-block; background:linear-gradient(135deg,#14532d,#052e16); border:1px solid #16a34a; color:#86efac; font-size:10px; padding:2px 6px; border-radius:4px; margin-top:4px; margin-left:4px; }
+    .new-badge { display:inline-block; background:linear-gradient(135deg,#4c1d95,#2e1065); border:1px solid #7c3aed; color:#c4b5fd; font-size:10px; padding:2px 6px; border-radius:4px; margin-top:4px; margin-left:4px; }
+    .ex-section-hdr { font-size:11px; font-weight:700; letter-spacing:0.06em; color:#6B7280; margin-top:14px; margin-bottom:6px; padding-bottom:4px; border-bottom:1px solid #374151; }
+    .ex-warmup-hdr { color:#F97316; border-color:#7c2d12; }
+    .ex-cool-hdr { color:#38bdf8; border-color:#0c4a6e; }
+    .ex-shoulder-hdr { color:#a78bfa; border-color:#4c1d95; }
+    .ex-main-hdr { color:#d1d5db; border-color:#374151; }
+    .ex-neck-hdr { color:#f87171; border-color:#7f1d1d; }
   </style>
 </head>
 <body class="bg-bg-dark text-white min-h-screen">
@@ -89,34 +48,23 @@
   <nav class="fixed bottom-0 left-0 right-0 bg-bg-card border-t border-gray-700 px-4 py-3 z-50">
     <div class="flex justify-around items-center">
       <button onclick="showPage('home')" id="tab-home" class="flex flex-col items-center gap-1 tab-active">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         <span class="text-xs">ホーム</span>
       </button>
       <button onclick="showPage('progress')" id="tab-progress" class="flex flex-col items-center gap-1 tab-inactive">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         <span class="text-xs">進捗</span>
       </button>
       <button onclick="showPage('science')" id="tab-science" class="flex flex-col items-center gap-1 tab-inactive">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         <span class="text-xs">科学根拠</span>
       </button>
       <button onclick="showPage('history')" id="tab-history" class="flex flex-col items-center gap-1 tab-inactive">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         <span class="text-xs">履歴</span>
       </button>
       <button onclick="showPage('settings')" id="tab-settings" class="flex flex-col items-center gap-1 tab-inactive">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <span class="text-xs">設定</span>
       </button>
     </div>
@@ -131,86 +79,210 @@
   </div>
 
   <script>
-    // ========== DATA ==========
+    // ========== RANKS ==========
     const RANKS = [
-      { rank: 'Rookie', minExp: 0, maxExp: 499, color: '#10B981', icon: '🟢' },
-      { rank: 'Amateur', minExp: 500, maxExp: 1499, color: '#3B82F6', icon: '🔵' },
-      { rank: 'Semi-Pro', minExp: 1500, maxExp: 2999, color: '#FBBF24', icon: '🟡' },
-      { rank: 'Pro', minExp: 3000, maxExp: 4999, color: '#F97316', icon: '🟠' },
-      { rank: 'Elite', minExp: 5000, maxExp: 7499, color: '#DC2626', icon: '🔴' },
-      { rank: 'Legend', minExp: 7500, maxExp: Infinity, color: '#000000', icon: '⚫' },
+      { rank: 'Rookie',   minExp: 0,    maxExp: 499,      color: '#10B981', icon: '🟢' },
+      { rank: 'Amateur',  minExp: 500,  maxExp: 1499,     color: '#3B82F6', icon: '🔵' },
+      { rank: 'Semi-Pro', minExp: 1500, maxExp: 2999,     color: '#FBBF24', icon: '🟡' },
+      { rank: 'Pro',      minExp: 3000, maxExp: 4999,     color: '#F97316', icon: '🟠' },
+      { rank: 'Elite',    minExp: 5000, maxExp: 7499,     color: '#DC2626', icon: '🔴' },
+      { rank: 'Legend',   minExp: 7500, maxExp: Infinity, color: '#000000', icon: '⚫' },
     ];
 
     // ========== SCIENCE NOTES ==========
     const SCIENCE_NOTES = [
-      {
-        category: 'Zone 2 心拍数',
-        icon: '❤️',
-        title: 'Zone 2の正確な定義（2024年改訂）',
-        content: '旧設定の110-130 bpmはZone 1（完全回復域）。33歳の推定最大心拍数187 bpmに基づくZone 2は130-145 bpm。',
-        source: 'IJSPP 2024 — International Journal of Sports Physiology and Performance',
-        badge: 'science'
-      },
-      {
-        category: '首Gフォース対策',
-        icon: '🔴',
-        title: 'Red Bull公式: 首強化プログラム',
-        content: 'F1ドライバーは5-6Gの横加速度に対応する首を持つ。等尺性最大収縮トレーニングが最も効果的。プロは純粋な首筋力で40kg以上に対応。',
-        source: 'Red Bull Racing 公式 + PMC - Cervical Strengthening in Racing Drivers',
-        badge: 'f1'
-      },
-      {
-        category: 'グリップ・前腕',
-        icon: '💪',
-        title: 'Red Bull公式: 前腕とグリップの重要性',
-        content: 'F1ドライバーの目標グリップ力は55kg以上。ステアリング力は最大50kgf。デッドハング・ファーマーズキャリーが推奨。',
-        source: 'Red Bull Racing 公式 + StrengthLog - Motorsports Strength Training',
-        badge: 'f1'
-      },
-      {
-        category: 'プライオメトリクス安全性',
-        icon: '🦵',
-        title: 'ランナーズニー復帰ガイドライン',
-        content: 'Week 1でのジャンプスクワット・スプリットジャンプは膝への衝撃が体重の2-4倍。ランナーズニー後は最低2週間高衝撃を控えるべき。',
-        source: 'JOSPT 2019 — Journal of Orthopaedic & Sports Physical Therapy',
-        badge: 'safety'
-      },
-      {
-        category: '反り腰改善',
-        icon: '🧘',
-        title: '骨盤前傾の科学的矯正法（2024）',
-        content: '大臀筋の収縮が骨盤後傾の主要戦略。腹横筋の活性化で深部コアが機能する。デッドバグ・グルートブリッジが最も証拠に基づく手法。',
-        source: 'PMC 2024 — Muscular Strategies for Pelvic Correction',
-        badge: 'science'
-      },
-      {
-        category: 'McLaren 公式',
-        icon: '🏎️',
-        title: 'McLarenトレーニング哲学',
-        content: '冬場に重い筋トレを集中実施。1日3セッション（朝:モビリティ/昼:筋力/夜:回復）。首強化がシーズン前の最重要課題。',
-        source: 'McLaren Racing 公式 + Technogym Partnership',
-        badge: 'f1'
-      },
-      {
-        category: '反応速度',
-        icon: '⚡',
-        title: 'F1公式: 反応速度トレーニング',
-        content: 'F1ドライバー平均反応速度0.2-0.3秒。週4-5回の反応トレーニングで10-20%改善可能。ビジュアライゼーション（可視化）がFerrari/McLarenで採用。',
-        source: 'Formula1.com 公式 + Motiv8 Training Research',
-        badge: 'f1'
-      },
-      {
-        category: '栄養タイミング',
-        icon: '🍳',
-        title: 'トレーニング後30分以内のプロテイン',
-        content: '運動後30分以内に20-40gのタンパク質を摂取することで筋タンパク合成が+47%向上。無調整ソイラテが便利。',
-        source: 'IJSN 2021 — International Journal of Sport Nutrition',
-        badge: 'science'
-      }
+      { category: 'Zone 2 心拍数', icon: '❤️', title: 'Zone 2の正確な定義（2024年改訂）', content: '旧設定の110-130 bpmはZone 1（完全回復域）。33歳の推定最大心拍数187 bpmに基づくZone 2は130-145 bpm。', source: 'IJSPP 2024 — International Journal of Sports Physiology and Performance', badge: 'science' },
+      { category: '首Gフォース対策', icon: '🔴', title: 'Red Bull公式: 首強化プログラム', content: 'F1ドライバーは5-6Gの横加速度に対応する首を持つ。等尺性最大収縮トレーニングが最も効果的。プロは純粋な首筋力で40kg以上に対応。', source: 'Red Bull Racing 公式 + PMC - Cervical Strengthening in Racing Drivers', badge: 'f1' },
+      { category: 'グリップ・前腕', icon: '💪', title: 'Red Bull公式: 前腕とグリップの重要性', content: 'F1ドライバーの目標グリップ力は55kg以上。ステアリング力は最大50kgf。デッドハング・ファーマーズキャリーが推奨。', source: 'Red Bull Racing 公式 + StrengthLog - Motorsports Strength Training', badge: 'f1' },
+      { category: 'プライオメトリクス安全性', icon: '🦵', title: 'ランナーズニー復帰ガイドライン', content: 'Week 1でのジャンプスクワット・スプリットジャンプは膝への衝撃が体重の2-4倍。ランナーズニー後は最低2週間高衝撃を控えるべき。', source: 'JOSPT 2019 — Journal of Orthopaedic & Sports Physical Therapy', badge: 'safety' },
+      { category: '反り腰改善', icon: '🧘', title: '骨盤前傾の科学的矯正法（2024）', content: '大臀筋の収縮が骨盤後傾の主要戦略。腹横筋の活性化で深部コアが機能する。デッドバグ・グルートブリッジが最も証拠に基づく手法。', source: 'PMC 2024 — Muscular Strategies for Pelvic Correction', badge: 'science' },
+      { category: 'McLaren 公式', icon: '🏎️', title: 'McLarenトレーニング哲学', content: '冬場に重い筋トレを集中実施。1日3セッション（朝:モビリティ/昼:筋力/夜:回復）。首強化がシーズン前の最重要課題。', source: 'McLaren Racing 公式 + Technogym Partnership', badge: 'f1' },
+      { category: '反応速度', icon: '⚡', title: 'F1公式: 反応速度トレーニング', content: 'F1ドライバー平均反応速度0.2-0.3秒。週4-5回の反応トレーニングで10-20%改善可能。ビジュアライゼーション（可視化）がFerrari/McLarenで採用。', source: 'Formula1.com 公式 + Motiv8 Training Research', badge: 'f1' },
+      { category: '栄養タイミング', icon: '🍳', title: 'トレーニング後30分以内のプロテイン', content: '運動後30分以内に20-40gのタンパク質を摂取することで筋タンパク合成が+47%向上。無調整ソイラテが便利。', source: 'IJSN 2021 — International Journal of Sport Nutrition', badge: 'science' }
     ];
 
-    // ========== WEEK 1 MISSIONS (全7日) ==========
+    // ========== EXERCISE HELPER FUNCTIONS ==========
+
+    function getWarmupExercises() {
+      return [
+        { name: '🔥 ウォームアップ（3分・省略禁止）', detail: 'ケガ予防のため全トレーニング前に必須', isHeader: true, headerClass: 'ex-warmup-hdr' },
+        {
+          name: '足首回し', detail: '各10回（時計・反時計回り）',
+          howto: ['片脚を少し浮かせ、足首をゆっくり時計回りに10回', '反時計回りに10回', '反対側も同様（立位でやりにくければ座って行う）'],
+          points: ['大きくゆっくり回す（小さく速くはNG）', '左右差があれば硬い方を多めに'],
+          interval: 'すぐ次へ'
+        },
+        {
+          name: '膝回し', detail: '両手で膝を包み小さく円 × 各10回',
+          howto: ['両足を揃えて立ち、両手で膝を軽く包む', '膝を小さく円を描くように回す（内→外）×10回', '外→内に10回'],
+          points: ['膝に痛みがある場合は小さな円から', 'かかとは床につけたまま'],
+          interval: 'すぐ次へ'
+        },
+        {
+          name: '腰回し（ヒップサークル）', detail: '大きく円を描く × 左右各10回',
+          howto: ['足を肩幅に開いて立つ', '腰を使って大きく円を描くように回す（左回り）×10回', '右回りに10回'],
+          points: ['上半身は固定して腰だけ動かす', '視線は正面をキープ'],
+          interval: 'すぐ次へ'
+        },
+        {
+          name: '肩回し（前後）', detail: '前回し10回 → 後ろ回し10回',
+          howto: ['腕を自然に下ろした状態で立つ', '肩甲骨を意識して大きく肩を前回し × 10回', '後ろ回し × 10回'],
+          points: ['できるだけ大きく回す（耳に腕がつくくらい）', '左右同時でも片方ずつでもOK'],
+          interval: 'すぐ次へ'
+        },
+        {
+          name: '首ストレッチ（前後左右）', detail: '各方向2秒×2回（回転させず倒すだけ）',
+          howto: ['ゆっくり頭を前に倒す → 2秒 → 戻す（2回）', '後ろに倒す → 2秒（2回）', '左に倒す → 2秒（2回）', '右に倒す → 2秒（2回）'],
+          points: ['回転させない（倒すだけ）', '痛みのない範囲で', 'ゆっくりを守る（急に動かさない）'],
+          ng: 'NG: 首を速く回転させる（頸椎への負担大）',
+          interval: 'モビリティへ'
+        }
+      ];
+    }
+
+    function getCoreExercises() {
+      return [
+        { name: '◾ 体幹・骨盤モビリティ（反り腰改善）', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+        {
+          name: 'キャットカウ', detail: '10回（呼吸と連動）',
+          howto: ['四つん這い（手=肩の真下、膝=腰の真下）', '息を吐きながら → 背中を丸める（猫ポーズ）→ 頭・骨盤を下に → 2秒', '息を吸いながら → 背中を反らす（牛ポーズ）→ 頭・尾てい骨を上に → 2秒', '10回繰り返す'],
+          points: ['首から腰まで背骨全体を使う（腰だけはNG）', '呼吸と動きを連動（吐く=丸める、吸う=反らす）', '弾みをつけない（ゆっくりコントロール）'],
+          ng: 'NG: 腰だけ動かして胸椎・首が固まる',
+          interval: '次の種目へ'
+        },
+        {
+          name: 'デッドバグ', detail: '左右10回×2セット（腰を床に押し付ける！）',
+          howto: ['仰向けに寝る', '両腕を天井に向けて垂直に伸ばす', '両膝を90度に曲げて浮かせる（テーブルトップ）', '右腕を頭の方へ・左脚を床スレスレに伸ばす → 2秒キープ', '戻す → 左腕・右脚を伸ばす（= 1回）', '10回繰り返す → 30秒休憩 → もう1セット'],
+          points: ['腰は絶対に床から浮かない（これが最重要ポイント）', 'お腹を薄くへこませて腹圧をかける', '難しければ脚を伸ばす高さを上げる（腰への負担が減る）'],
+          ng: 'NG: 腰が床から浮く → 脚の高さを上げて対処',
+          interval: '30秒休憩（セット間）'
+        },
+        {
+          name: 'グルートブリッジ', detail: '15回×2セット（トップで2秒お尻を締める）',
+          howto: ['仰向け、膝を90度に曲げ、足は腰幅', 'おへそを少し引き込んで腹圧をかける', 'お尻を締めながら腰を持ち上げる（膝・腰・肩が一直線）', 'トップで2秒ギュッ！ → ゆっくり下ろす', '15回 → 30秒休憩 → もう1セット'],
+          points: ['トップで大臀筋を完全収縮させる（骨盤矯正の核心！）', '膝が内側に入らない（足の小指方向に力をかける）', '上がりきった時に腰を反らしすぎない'],
+          ng: 'NG: 腰だけ上げてお尻が使えていない',
+          interval: '30秒休憩（セット間）'
+        },
+        {
+          name: '腸腰筋ストレッチ', detail: '左右30秒×2セット（骨盤後傾を保持）',
+          howto: ['右脚を前に出し、左膝を床につける（ランジ姿勢）', 'おへそを上に向けるように骨盤を後傾させる（重要！）', '体重をゆっくり前方にシフト', '股関節の前面（鼠径部）が伸びる感覚 → 30秒キープ', '左右入れ替え → 30秒休憩 → もう1セット'],
+          points: ['骨盤後傾をキープしながら伸ばす（腰が反るとNG）', '体幹に力を入れてバランスを保つ', '呼吸しながらゆっくり（息を止めない）'],
+          ng: 'NG: 腰が反って骨盤が前傾する（効果がなくなる）',
+          interval: '左右交互に実施'
+        },
+        {
+          name: 'クラムシェル', detail: '左右15回×2セット（中臀筋に効かせる）',
+          howto: ['横向きに寝る（足・膝・腰を揃える）', '膝を90度に曲げる', '骨盤を固定したまま上の膝をゆっくり開く（30-45度）', '1秒キープ → ゆっくり閉じる', '15回 → 反対側 → 30秒休憩 → もう1セット'],
+          points: ['骨盤が後ろに倒れないよう固定（腸骨を意識）', 'お尻の横（中臀筋）に効いているか確認', '弾みをつけずゆっくり'],
+          ng: 'NG: 腰・骨盤が後ろに倒れる（骨盤を押さえながら行う）',
+          interval: '30秒休憩（セット間）'
+        }
+      ];
+    }
+
+    function getShoulderExercises() {
+      return [
+        { name: '🩺 左肩リハビリ（3種・毎日必須）', detail: '肩関節可動域の段階的回復プログラム', isHeader: true, headerClass: 'ex-shoulder-hdr' },
+        {
+          name: '🆕 ペンデュラム（振り子運動）', detail: '前後15回 + 円10回×2方向（左肩のみ）',
+          howto: ['椅子や机に右手をつき、体を30度前傾させる', '左腕を完全脱力してぶら下げる（肩の力をゼロに）', '体を軽く揺らして、腕を振り子のように前後に動かす（腕の力は使わない）', '前後15回 → 時計回り10回 → 反時計回り10回'],
+          points: ['腕の力を一切使わない（重力だけで動かす）', '痛みのない範囲で（無理に広げない）', '左肩の「詰まり感」が和らぐのを感じる'],
+          ng: 'NG: 腕の筋力で振り回す（筋力運動になってしまう）',
+          interval: '30秒休憩'
+        },
+        {
+          name: '🆕 ウォールスライド（壁滑り）', detail: '10回×2セット（肩甲骨の上方回旋改善）',
+          howto: ['壁の前に立ち、肘90度に曲げて上腕・前腕・手のひらを壁につける（W字）', '壁から離さずにゆっくり腕を上にスライドする（Y字方向へ）', '左腕が行けるところまで上げる（痛みが出る手前で止める）', 'ゆっくりW字に戻す → 10回 → 30秒休憩 → もう1セット'],
+          points: ['壁から手が離れたら可動域の限界（無理に上げない）', '体幹固定（腰を反らせてごまかさない）', '左右差を毎日確認（左の高さが徐々に上がるのを記録）'],
+          ng: 'NG: 腰を反らせて腕を無理に上げる',
+          interval: '30秒休憩（セット間）'
+        },
+        {
+          name: '🆕 クロスボディストレッチ', detail: '30秒×2セット（後部肩関節包のリリース）',
+          howto: ['立位。左腕を体の右側へ水平に伸ばす（肩の高さ）', '右腕の前腕部で左腕を体に優しく引き寄せる', '左肩の後ろ〜肩甲骨周囲が伸びる感覚をキープ → 30秒', '右側も同様（左右差の確認用）'],
+          points: ['肩をすくめない（肩は下げたまま）', '引く強さ：「伸びているが痛くない」程度', '左右差の変化を週ごとに記録する'],
+          ng: 'NG: 首を横に倒して代償する',
+          interval: '30秒休憩（セット間）'
+        }
+      ];
+    }
+
+    function getStandardMobility() {
+      return [
+        ...getWarmupExercises(),
+        ...getCoreExercises(),
+        ...getShoulderExercises()
+      ];
+    }
+
+    function getCooldown() {
+      return [
+        { name: '🧊 クールダウン（5-7分・省略禁止）', detail: '心拍数を下げ・筋肉を緩め・回復を促進', isHeader: true, headerClass: 'ex-cool-hdr' },
+        {
+          name: 'ハムストリングスストレッチ', detail: '30秒×左右各2セット（太もも裏）',
+          howto: ['仰向けに寝て、片脚を両手で抱える', 'ゆっくり膝を伸ばす方向に向かって伸ばす（完全に伸びなくてOK）', '太もも裏〜膝裏が伸びる感覚をキープ → 30秒', '反対側も同様 → 30秒休憩 → もう1セット'],
+          points: ['息を止めない（吐きながら伸ばす）', '痛みのない範囲で（ピリピリ感はNG）', '筋肉が緩んできたら少し深く伸ばす'],
+          interval: '左右入れ替え'
+        },
+        {
+          name: '腸腰筋ストレッチ（静的・クールダウン用）', detail: '各30秒×2セット（股関節前面）',
+          howto: ['ランジ姿勢（前脚膝曲げ、後ろ脚膝床）', 'お腹を引き込んで体をゆっくり前方へ', '股関節の前面が伸びる感覚 → 30秒キープ', '反対側も同様'],
+          points: ['呼吸しながらゆっくり伸ばす', '骨盤後傾を保つ（腰を反らさない）'],
+          interval: '左右入れ替え'
+        },
+        {
+          name: 'カーフストレッチ（ふくらはぎ）', detail: '各30秒（壁に手をつき）',
+          howto: ['壁に手をつき、後ろ足を伸ばす', 'かかとを床につけたまま前膝を曲げて体重を前にかける', 'ふくらはぎが伸びる感覚をキープ → 30秒 → 反対側'],
+          points: ['かかとを床から浮かさない', '膝はまっすぐ（曲げない）'],
+          interval: '左右入れ替え'
+        },
+        {
+          name: '胸のストレッチ（ドア枠）', detail: '30秒×2セット（前肩・大胸筋）',
+          howto: ['ドア枠や壁の角に両腕をつく（肘90度・肩の高さ）', '体を前方にゆっくり移動させる', '胸・前肩が伸びる感覚 → 30秒', '30秒休憩 → もう1セット'],
+          points: ['腰を反らさない（体幹固定）', '呼吸しながらゆっくり'],
+          interval: '30秒休憩（セット間）'
+        },
+        {
+          name: '腹式呼吸（副交感神経活性化）', detail: '1分間（回復促進・睡眠の質向上）',
+          howto: ['仰向けに寝て目を閉じる', '鼻から4秒かけてゆっくり吸う（お腹が膨らむ）', '口から8秒かけてゆっくり吐く（お腹がへこむ）', '1分間繰り返す'],
+          points: ['交感神経優位状態を副交感神経にシフトする', '睡眠の質向上・筋肉回復促進に効果的', 'できれば目を閉じてリラックスした状態で'],
+          interval: '終了'
+        }
+      ];
+    }
+
+    function getCyclingCooldown() {
+      return [
+        { name: '🧊 クールダウン（サイクリング後・5分）', detail: '心拍を下げてから筋肉を伸ばす', isHeader: true, headerClass: 'ex-cool-hdr' },
+        {
+          name: 'ゆっくりペダリング', detail: '5分（心拍100 bpm以下まで）',
+          howto: ['ペースを大幅に落とし、軽いギアでゆっくりペダリング', '心拍計を確認して100 bpm以下になるまで続ける'],
+          points: ['急に止まらない（心臓に負担がかかる）', '心拍が下がったら次のストレッチへ'],
+          interval: '心拍100以下になったら次へ'
+        },
+        {
+          name: 'ハムストリングスストレッチ', detail: '30秒×左右各1セット',
+          howto: ['座位で片脚を伸ばし、体を前傾させる（膝は軽く曲げてOK）', '太もも裏が伸びる感覚 → 30秒 → 反対側'],
+          interval: '左右交互'
+        },
+        {
+          name: 'カーフストレッチ', detail: '30秒×左右各1セット',
+          howto: ['壁に手をつき後ろ足を伸ばす', 'かかとを床につけたまま前膝を曲げる', 'ふくらはぎが伸びる感覚 → 30秒 → 反対側'],
+          interval: '左右交互'
+        },
+        {
+          name: '腹式呼吸', detail: '1分（回復促進）',
+          howto: ['仰向けに寝て目を閉じる', '鼻から4秒で吸う → 口から8秒でゆっくり吐く', '1分繰り返す'],
+          points: ['副交感神経を活性化して回復を促進'],
+          interval: '終了'
+        }
+      ];
+    }
+
+    // ========== WEEK 1 MISSIONS（全7日） ==========
     const WEEK1_MISSIONS = [
+      // ── DAY 1 ──────────────────────────────────────────
       {
         date: '2026-02-18',
         dayNumber: 1,
@@ -219,51 +291,76 @@
         scienceNote: 'グルートブリッジが大臀筋収縮→骨盤後傾の主要戦略（PMC 2024）',
         missions: [
           {
-            id: 'm1-req1',
-            type: 'required1',
-            title: '必須1: モビリティルーティン',
-            description: '反り腰改善 + 左肩リハビリ',
-            duration: '10-15分',
-            exp: 50,
-            scienceBadge: 'science',
-            exercises: [
-              { name: 'キャットカウ', detail: '10回（骨盤前後傾を意識）' },
-              { name: 'デッドバグ', detail: '左右10回×2セット（腰を床に押し付ける！）' },
-              { name: 'グルートブリッジ', detail: '15回×2セット（トップで2秒お尻を締める）' },
-              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット（骨盤後傾を保持）' },
-              { name: 'クラムシェル', detail: '左右15回×2セット（お尻の横に効かせる）' }
-            ]
+            id: 'm1-req1', type: 'required1',
+            title: '必須1: ウォームアップ + モビリティ + 左肩リハビリ',
+            description: '関節ほぐし → 体幹モビリティ5種 → 左肩リハビリ3種',
+            duration: '18-20分', exp: 50, scienceBadge: 'science',
+            exercises: getStandardMobility()
           },
           {
-            id: 'm1-req2',
-            type: 'required2',
+            id: 'm1-req2', type: 'required2',
             title: '必須2: 下半身パワー + グリップ基礎',
             description: 'デッドハング追加（Red Bull公式グリップ強化）',
-            duration: '25分',
-            exp: 100,
-            scienceBadge: 'f1',
+            duration: '30-35分', exp: 100, scienceBadge: 'f1',
             exercises: [
-              { name: 'グルートブリッジ強化版（片脚）', detail: '20回×3セット（右10+左10=20回）' },
-              { name: 'ブルガリアンスクワット', detail: '左右12回×3セット（膝がつま先を超えない）' },
-              { name: '🆕 デッドハング', detail: '30秒×3セット（グリップ基礎。肩甲骨を下げる）' },
-              { name: 'カーフレイズ', detail: '20回×3セット（トップで2秒）' },
-              { name: 'プランク', detail: '3分×2セット（チャレンジ：片手を前に伸ばす）' }
+              { name: '◾ メイントレーニング', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: 'グルートブリッジ強化版（片脚）', detail: '20回×3セット（右10+左10）',
+                howto: ['仰向け、片脚を天井に向けて伸ばす（もう一方の膝は90度）', 'お尻を締めながら腰を持ち上げる（膝・腰・肩が一直線）', 'トップで3秒ギュッ！ → ゆっくり下ろす', '右脚伸ばし10回 → 左脚伸ばし10回 = 20回', '1分休憩 × 3セット'],
+                points: ['支える脚（床の脚）の大臀筋で押し上げる', '腰が傾かないよう水平を保つ（コアを使う）', '浮かしている脚はリラックス'],
+                ng: 'NG: 腰が傾く（水平を鏡やスマホで確認）',
+                interval: '1分休憩（セット間）'
+              },
+              {
+                name: 'ブルガリアンスクワット', detail: '左右12回×3セット',
+                howto: ['椅子の前に1歩分離れて立つ', '後ろ足の甲を椅子の座面に乗せる', '前足に体重をかけながら後膝を床に近づける（90度まで）', '前足のかかとで床を押して立つ', '12回 → 左右入れ替え → 1分休憩 × 3セット'],
+                points: ['前膝がつま先より前に出ない（かかと重心）', '上体は軽く前傾（直立しない）', '膝の方向は小指方向（内側に入らない）'],
+                ng: 'NG: 前膝が大きくつま先より前に出る',
+                interval: '1分休憩（セット間）'
+              },
+              {
+                name: '🆕 デッドハング（グリップ基礎）', detail: '30秒×3セット（Week 1ターゲット）',
+                howto: ['懸垂バーを順手で肩幅に握る', 'ぶら下がるだけ（引き上げない）', '肩甲骨を少し下げる（肩を耳から遠ざける）', '30秒キープ → ゆっくり降りる', '1分休憩 × 3セット'],
+                points: ['肩をすくめず肩甲骨を下げてぶら下がる（肩関節保護）', '手のひら全体で握る（指だけはNG）', 'ゆっくり呼吸する（息を止めない）'],
+                ng: 'NG: 肩をすくめたままぶら下がる（肩関節を傷める）',
+                interval: '1分休憩（セット間）'
+              },
+              {
+                name: 'カーフレイズ', detail: '20回×3セット（トップで2秒キープ）',
+                howto: ['壁に軽く手をつき、足は腰幅', 'かかとを最大限上げる（つま先立ち）', 'トップで2秒キープ → ゆっくり下ろす（かかとは床につけない）', '20回 × 30秒休憩 × 3セット'],
+                points: ['トップで2秒キープ（ふくらはぎを完全収縮）', 'かかとを床につけない（常に緊張をキープ）', '反動で上げない（ゆっくりコントロール）'],
+                ng: 'NG: バウンドして反動で上げる',
+                interval: '30秒休憩（セット間）'
+              },
+              {
+                name: 'プランク', detail: '3分×2セット（チャレンジ: 片手を前に伸ばす）',
+                howto: ['前腕を床につく（肘は肩の真下）、つま先で支える', '頭・肩・腰・かかとが一直線', '3分キープ → 30秒休憩 → もう1セット', '【チャレンジ】片手を5秒ずつ交互に前に伸ばす（抗回転要素追加）'],
+                points: ['お尻を上げすぎない・下げすぎない（一直線）', 'おへそを引き込んで腹圧をかける', 'あごを引いて首を中立に保つ', '2分で限界の場合は2分×3セットに変更してOK'],
+                ng: 'NG: 腰が下がる / お尻が上がりすぎる',
+                interval: '30秒休憩（セット間）'
+              },
+              ...getCooldown()
             ]
           },
           {
-            id: 'm1-bonus',
-            type: 'bonus',
+            id: 'm1-bonus', type: 'bonus',
             title: 'ボーナス: 追加HIIT',
             description: 'タバタ式マウンテンクライマー',
-            duration: '3分',
-            exp: 50,
-            scienceBadge: null,
+            duration: '3分', exp: 50, scienceBadge: null,
             exercises: [
-              { name: 'マウンテンクライマー', detail: '20秒全力 / 10秒休憩 × 4ラウンド' }
+              {
+                name: 'マウンテンクライマー（タバタ式）', detail: '20秒全力 / 10秒完全停止 × 4ラウンド',
+                howto: ['腕立て伏せの姿勢（手は肩の真下）', '体は頭からかかとまで一直線をキープ', '右膝を胸に引き寄せる → 左膝と入れ替える', '素早く交互に動かす（走るように）', '20秒全力 → 10秒完全停止 × 4ラウンド'],
+                points: ['腰が上がらないよう一直線をキープ（コアを使う）', '呼吸を止めない', '10秒の休憩は完全に止まる'],
+                ng: 'NG: 腰が上がりすぎる / 体が揺れる',
+                interval: '10秒完全休憩（ラウンド間）'
+              }
             ]
           }
         ]
       },
+
+      // ── DAY 2 ──────────────────────────────────────────
       {
         date: '2026-02-19',
         dayNumber: 2,
@@ -272,51 +369,56 @@
         scienceNote: '33歳最大心拍187 bpm → Zone 2 = 131-150 bpm（IJSPP 2024）。旧設定110-130はZone 1。',
         missions: [
           {
-            id: 'm2-req1',
-            type: 'required1',
-            title: '必須1: モビリティルーティン',
-            description: '反り腰改善 + 左肩リハビリ',
-            duration: '10-15分',
-            exp: 50,
-            scienceBadge: null,
-            exercises: [
-              { name: 'キャットカウ', detail: '10回' },
-              { name: 'デッドバグ', detail: '左右10回×2セット' },
-              { name: 'グルートブリッジ', detail: '15回×2セット' },
-              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
-              { name: 'クラムシェル', detail: '左右15回×2セット' }
-            ]
+            id: 'm2-req1', type: 'required1',
+            title: '必須1: ウォームアップ + モビリティ + 左肩リハビリ',
+            description: '関節ほぐし → 体幹モビリティ5種 → 左肩リハビリ3種',
+            duration: '18-20分', exp: 50, scienceBadge: null,
+            exercises: getStandardMobility()
           },
           {
-            id: 'm2-req2',
-            type: 'required2',
+            id: 'm2-req2', type: 'required2',
             title: '必須2: サイクリング Zone 2',
             description: '✅修正: 心拍130-145 bpm（旧110-130は科学的にZone 1）',
-            duration: '40-50分',
-            exp: 100,
-            scienceBadge: 'science',
+            duration: '40-50分', exp: 100, scienceBadge: 'science',
             exercises: [
-              { name: '🔴 修正: 目標心拍数', detail: '130-145 bpm（旧設定110-130は誤り）' },
-              { name: '主指標: 会話テスト', detail: '短文は言えるが長い会話は辛い。鼻呼吸がやや苦しい' },
-              { name: 'RPE（体感強度）', detail: '10/20（Borgスケール）' },
-              { name: 'ケイデンス', detail: '80-90 rpm' },
-              { name: '145bpm超えたら', detail: 'ペースを即座に落とす（Zone 3サイン）' }
+              { name: '🚴 Zone 2 サイクリングプロトコル', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: '🔴 目標心拍数', detail: '130-145 bpm（修正済み）',
+                howto: ['心拍計で常に心拍数を確認', '130 bpm以下ならペースアップ', '145 bpm超えたら即ペースダウン'],
+                points: ['会話テストが最も信頼できる指標（短文は言えるが長い会話は辛い）', 'RPE（体感強度）10/20（Borgスケール）'],
+                interval: '10分ごとにチェック'
+              },
+              {
+                name: 'ケイデンス目標', detail: '80-90 rpm',
+                howto: ['ギアは中程度に設定', 'ペダルをリズムよく回す', '重いギアで低ケイデンスはNG（膝への負担大）'],
+                points: ['ケイデンスが高いほど膝への負担が少ない', '心拍が上がりすぎる場合はギアを落とす（重くしない）'],
+                interval: 'Zone 2通じて維持'
+              },
+              {
+                name: '会話テスト確認', detail: '10分ごとに実施（Zone 2の主指標）',
+                howto: ['短い文章を声に出して確認（「今日は良い天気だ」など）', '言えるが長い会話は辛い → Zone 2 ✅', '余裕で会話できる → Zone 1（ペースアップ）', '全く話せない → Zone 3（ペースダウン）'],
+                interval: '10分ごと'
+              },
+              ...getCyclingCooldown()
             ]
           },
           {
-            id: 'm2-bonus',
-            type: 'bonus',
-            title: 'ボーナス: 追加10分延長',
-            description: '合計60分（McLaren有酸素ベース構築指針）',
-            duration: '10分',
-            exp: 50,
-            scienceBadge: 'f1',
+            id: 'm2-bonus', type: 'bonus',
+            title: 'ボーナス: 追加10分延長（合計60分）',
+            description: 'McLaren有酸素ベース構築指針',
+            duration: '10分', exp: 50, scienceBadge: 'f1',
             exercises: [
-              { name: 'サイクリング延長', detail: '+10分（合計60分）。心拍130-145維持のまま。' }
+              {
+                name: 'サイクリング延長', detail: '+10分（合計60分）。心拍130-145維持のまま。',
+                howto: ['40-50分の時点で余裕があれば延長', '心拍数が130-145 bpmで安定していること', '膝に違和感がないことを確認'],
+                interval: '延長後クールダウンへ'
+              }
             ]
           }
         ]
       },
+
+      // ── DAY 3 ──────────────────────────────────────────
       {
         date: '2026-02-20',
         dayNumber: 3,
@@ -325,104 +427,153 @@
         scienceNote: '等尺性最大収縮: 屈曲力+110%、回旋+76%、伸展+69%（PMC - Racing Drivers Study）',
         missions: [
           {
-            id: 'm3-req1',
-            type: 'required1',
-            title: '必須1: モビリティルーティン',
-            description: '反り腰改善 + 左肩リハビリ',
-            duration: '10-15分',
-            exp: 50,
-            scienceBadge: null,
-            exercises: [
-              { name: 'キャットカウ', detail: '10回' },
-              { name: 'デッドバグ', detail: '左右10回×2セット' },
-              { name: 'グルートブリッジ', detail: '15回×2セット' },
-              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
-              { name: 'クラムシェル', detail: '左右15回×2セット' }
-            ]
+            id: 'm3-req1', type: 'required1',
+            title: '必須1: ウォームアップ + モビリティ + 左肩リハビリ',
+            description: '関節ほぐし → 体幹モビリティ5種 → 左肩リハビリ3種',
+            duration: '18-20分', exp: 50, scienceBadge: null,
+            exercises: getStandardMobility()
           },
           {
-            id: 'm3-req2',
-            type: 'required2',
+            id: 'm3-req2', type: 'required2',
             title: '必須2: 上半身 + 首G強化 + グリップ',
             description: 'F1公式: 首=最重要。Red Bull: グリップ55kg目標',
-            duration: '25分',
-            exp: 100,
-            scienceBadge: 'f1',
+            duration: '30分', exp: 100, scienceBadge: 'f1',
             exercises: [
-              { name: '懸垂', detail: '3回×3セット（3秒かけてゆっくり下りる）' },
-              { name: '🆕 デッドハング', detail: '45秒×3セット（Day1の30秒から延長）' },
-              { name: '腕立て伏せ', detail: '20回×3セット' },
-              { name: '🆕 首アイソメトリック壁押し', detail: '4方向 × 10秒 × 3セット（70-80%の力で！）' },
-              { name: '🆕 タオル抵抗首トレ', detail: '4方向 × 15回 × 2セット（目標: 40kg対応力）' },
-              { name: 'ニーレイズ', detail: '15回×3セット' }
+              { name: '◾ 上半身・グリップトレーニング', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: '懸垂', detail: '3回×3セット（3秒かけてゆっくり下りる）',
+                howto: ['バーを順手で肩幅より少し広く握る', '肩甲骨を引き下げる（肩を耳から遠ざける）', '肘を体に引き寄せながら顎がバーを越えるまで引き上げる', '3秒かけてゆっくり下ろす（完全に腕を伸ばす）', '3回 × 2分休憩 × 3セット'],
+                points: ['下ろす3秒（ネガティブ）が最重要（筋力の最大化）', '肩甲骨を先に動かしてから肘を曲げる', '体を揺らさない（反動を使わない）'],
+                ng: 'NG: 勢いで上がって素早く下りる（ネガティブを無駄にする）',
+                interval: '2分休憩（セット間）'
+              },
+              {
+                name: '🆕 デッドハング（45秒）', detail: '45秒×3セット（Day 1の30秒から延長）',
+                howto: ['懸垂バーを順手で肩幅に握る', '肩甲骨を下げてぶら下がる（引き上げない）', '45秒キープ → ゆっくり降りる', '1分休憩 × 3セット'],
+                points: ['Day 1（30秒）→ Day 3（45秒）→ Day 7（最長記録）の段階的進歩', 'グリップが先に限界になるか腕が先に疲れるかを確認'],
+                interval: '1分休憩（セット間）'
+              },
+              {
+                name: '腕立て伏せ', detail: '20回×3セット',
+                howto: ['手は肩より少し広く置く（肩幅の1.5倍）', '体は頭からかかとまで一直線', '胸が床に触れるまでゆっくり下ろす', '押し上げる（完全に肘を伸ばす）', '20回 × 1分休憩 × 3セット'],
+                points: ['下ろす時もコントロール（落とさない）', '肘を外に広げすぎない（約45度）', 'お尻が上がったり下がったりしない'],
+                ng: 'NG: 体が弓なりになる / お尻が上がる',
+                interval: '1分休憩（セット間）'
+              },
+              { name: '🔴 首Gフォース対策（F1基準）', detail: '', isHeader: true, headerClass: 'ex-neck-hdr' },
+              {
+                name: '🆕 首アイソメトリック壁押し', detail: '4方向 × 10秒 × 3セット（70-80%の力で！）',
+                howto: ['【前方】壁に額をつけ → 70-80%の力で壁に押す → 10秒キープ × 3回', '【後方】壁に後頭部をつけ → 後頭部で壁を押す → 10秒 × 3回', '【左側】壁に頭の左側をつけ → 押す → 10秒 × 3回', '【右側】壁に頭の右側をつけ → 押す → 10秒 × 3回', '各方向の間に10秒休憩'],
+                points: ['力加減は70-80%（100%は怪我リスク）', '呼吸を止めない（重要）', 'めまいや違和感が出たら即中止'],
+                ng: 'NG: 100%全力で押す（首の腱・筋肉を傷める）',
+                interval: '各方向間10秒休憩 × 3セット'
+              },
+              {
+                name: '🆕 タオル抵抗首トレ', detail: '4方向 × 15回 × 2セット（目標: 40kg対応力）',
+                howto: ['【前方】タオルを額に当て両手で端を持つ → 頭を前に押す + 手で抵抗 → 15回', '【後方】タオルを後頭部に当て → 頭を後ろに押す + 手で抵抗 → 15回', '【左右】各側頭部に当て同様 → 各15回', '全方向で2セット実施'],
+                points: ['アイソメトリック（首は動かない）が正しい形', '動かす距離はゼロ（等長収縮）', 'ゆっくり呼吸しながら'],
+                ng: 'NG: タオルで首を無理に動かす（ストレッチになってしまう）',
+                interval: '方向間30秒休憩（2セット）'
+              },
+              {
+                name: 'ニーレイズ', detail: '15回×3セット',
+                howto: ['懸垂バーにぶら下がる（肩幅）', '両膝を胸へゆっくり引き上げる（90度以上）', '1秒キープ → ゆっくり下ろす', '15回 × 1分休憩 × 3セット'],
+                points: ['体を揺らさない（反動なし）', '下ろす時もゆっくり（コアを使う）', 'できない場合：膝を上げる高さを下げる'],
+                ng: 'NG: 体を揺らして反動で上げる',
+                interval: '1分休憩（セット間）'
+              },
+              ...getCooldown()
             ]
           },
           {
-            id: 'm3-bonus',
-            type: 'bonus',
-            title: 'ボーナス: 首Gフォース強化',
-            description: '追加5分（10秒→15秒に延長 or 追加セット）',
-            duration: '5分',
-            exp: 50,
-            scienceBadge: 'f1',
+            id: 'm3-bonus', type: 'bonus',
+            title: 'ボーナス: 首Gフォース強化（追加5分）',
+            description: '10秒→15秒に延長 or 追加セット',
+            duration: '5分', exp: 50, scienceBadge: 'f1',
             exercises: [
-              { name: 'アイソメトリック延長', detail: '10秒→15秒に変更、または5セット目追加' }
+              {
+                name: 'アイソメトリック延長', detail: '10秒 → 15秒に変更、または5セット目追加',
+                howto: ['必須2で実施したアイソメトリック壁押しを15秒に延長', 'または4方向すべてを5セット目として追加'],
+                points: ['無理に延長せず、しっかり10秒ができていれば段階的に延ばす'],
+                interval: '各方向間10秒休憩'
+              }
             ]
           }
         ]
       },
+
+      // ── DAY 4 ──────────────────────────────────────────
       {
         date: '2026-02-21',
         dayNumber: 4,
         dayName: 'HIIT + SAFE TRAINING',
         theme: '⚠️安全版: ジャンプ系→低衝撃に全面改訂',
-        scienceNote: '膝蓋大腿部症候群後は最低2週間高衝撃禁止（JOSPT 2019）。ステップアップ・縄跳びは着地衝撃を抑えつつ同等の筋力強化が可能。',
+        scienceNote: '膝蓋大腿部症候群後は最低2週間高衝撃禁止（JOSPT 2019）。ステップアップ・縄跳びは同等の筋力強化が可能。',
         missions: [
           {
-            id: 'm4-req1',
-            type: 'required1',
-            title: '必須1: モビリティルーティン',
-            description: '反り腰改善 + 左肩リハビリ',
-            duration: '10-15分',
-            exp: 50,
-            scienceBadge: null,
-            exercises: [
-              { name: 'キャットカウ', detail: '10回' },
-              { name: 'デッドバグ', detail: '左右10回×2セット' },
-              { name: 'グルートブリッジ', detail: '15回×2セット' },
-              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
-              { name: 'クラムシェル', detail: '左右15回×2セット' }
-            ]
+            id: 'm4-req1', type: 'required1',
+            title: '必須1: ウォームアップ + モビリティ + 左肩リハビリ',
+            description: '関節ほぐし → 体幹モビリティ5種 → 左肩リハビリ3種',
+            duration: '18-20分', exp: 50, scienceBadge: null,
+            exercises: getStandardMobility()
           },
           {
-            id: 'm4-req2',
-            type: 'required2',
+            id: 'm4-req2', type: 'required2',
             title: '必須2: HIIT + 安全な下半身トレ',
             description: '🛡️ジャンプスクワット削除→ステップアップ+縄跳びに変更（膝安全）',
-            duration: '20分',
-            exp: 100,
-            scienceBadge: 'safety',
+            duration: '25分', exp: 100, scienceBadge: 'safety',
             exercises: [
-              { name: 'バーピー（ジャンプなし）タバタ', detail: '20秒全力 / 10秒休憩 × 6ラウンド' },
-              { name: '🆕 ステップアップ（椅子）', detail: '左右15回×3セット（3秒でゆっくり降りる。着地衝撃ゼロ）' },
-              { name: '🆕 ラテラルバンドウォーク', detail: '左右15歩×3セット（中臀筋強化→ランナーズニー予防）' },
-              { name: '🆕 縄跳び（通常跳び）', detail: '1分×3セット（膝を軽く曲げてバネにする）' }
+              { name: '◾ HIIT（タバタ式）', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: 'バーピー（ジャンプなし）タバタ', detail: '20秒全力 / 10秒休憩 × 6ラウンド',
+                howto: ['立位 → しゃがんで手を床につく', '両脚を後ろに伸ばす（腕立て姿勢）', '脚を戻す → ゆっくり立ち上がる（ジャンプなし）', '20秒間全力で繰り返す → 10秒完全停止', '6ラウンド'],
+                points: ['ジャンプしない（膝への衝撃を避ける）', '腕立て姿勢で腰が下がらない（体を一直線に保つ）', '全力を出し切る（20秒間）'],
+                ng: 'NG: 体が崩れたまま繰り返す（フォームを保つ）',
+                interval: '10秒完全休憩（ラウンド間）'
+              },
+              { name: '🛡️ 安全な下半身パワートレーニング', detail: 'Jump Squatの安全代替', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: '🆕 ステップアップ（椅子）', detail: '左右15回×3セット（3秒でゆっくり降りる）',
+                howto: ['安定した椅子（膝の高さ）の前に立つ', '右脚を椅子に乗せる', '右脚で体重を押し上げて立つ', '右脚のかかとをしっかり使ってゆっくり3秒かけて下りる', '右15回 → 左15回 = 1セット × 1分休憩 × 3セット'],
+                points: ['「下りる3秒」が最重要（ECCENTRICで膝を強化）', '前の膝がつま先より前に出ない', '椅子は絶対に安定したものを使う'],
+                ng: 'NG: 素早く下りる（ECCENTRICを無駄にする）',
+                interval: '1分休憩（セット間）'
+              },
+              {
+                name: '🆕 ラテラルバンドウォーク', detail: '左右15歩×3セット（中臀筋強化）',
+                howto: ['レジスタンスバンドを膝上に巻く（なければなしでもOK）', 'スクワット姿勢（膝を軽く曲げる）', '横方向に15歩歩く（右脚を引き寄せる）', '15歩戻る = 1セット', '30秒休憩 × 3セット'],
+                points: ['スクワット姿勢を保ちながら歩く（腰を落としたまま）', '膝が内側に入らないよう（常に外向き）', 'ゆっくりコントロールしながら歩く'],
+                ng: 'NG: 立った姿勢で歩く（中臀筋が使えない）',
+                interval: '30秒休憩（セット間）'
+              },
+              {
+                name: '🆕 縄跳び（通常跳び）', detail: '1分×3セット（膝を軽く曲げてバネにする）',
+                howto: ['縄の長さを確認（踏んだ時に手が腰の高さ）', '膝を軽く曲げてバネにする', 'リズムよく1分間通常跳び', '着地はつま先から（かかとから落ちない）', '1分 × 30秒休憩 × 3セット'],
+                points: ['膝を軽く曲げたまま（膝への衝撃を吸収）', '着地音が大きい場合は着地が硬い（改善ポイント）', '膝に違和感が出たら即中止（膝の状態優先）'],
+                ng: 'NG: 膝を伸ばして着地する（衝撃が大きくなる）',
+                interval: '30秒休憩（セット間）'
+              },
+              ...getCooldown()
             ]
           },
           {
-            id: 'm4-bonus',
-            type: 'bonus',
+            id: 'm4-bonus', type: 'bonus',
             title: 'ボーナス: タバタ式8ラウンド達成',
             description: 'マウンテンクライマーで8ラウンド 🔥 Tabata Pro',
-            duration: '4分',
-            exp: 50,
-            scienceBadge: null,
+            duration: '4分', exp: 50, scienceBadge: null,
             exercises: [
-              { name: 'マウンテンクライマー', detail: '20秒全力 / 10秒休憩 × 8ラウンド' }
+              {
+                name: 'マウンテンクライマー', detail: '20秒全力 / 10秒休憩 × 8ラウンド',
+                howto: ['腕立て伏せ姿勢（手は肩の真下）', '右膝を胸に引き寄せ → 左膝と交互に素早く動かす', '20秒全力 → 10秒完全停止 × 8ラウンド'],
+                points: ['腰が上がらない（体を一直線に保つ）', '8ラウンド目まで全力を維持'],
+                interval: '10秒完全休憩（ラウンド間）'
+              }
             ]
           }
         ]
       },
+
+      // ── DAY 5 ──────────────────────────────────────────
       {
         date: '2026-02-22',
         dayNumber: 5,
@@ -431,51 +582,50 @@
         scienceNote: '60分以上の有酸素は補給が必要。McLaren公式: 30分ごとにエネルギー補給。終了後30分以内にプロテイン摂取（IJSN 2021）。',
         missions: [
           {
-            id: 'm5-req1',
-            type: 'required1',
-            title: '必須1: モビリティルーティン',
-            description: '反り腰改善 + 左肩リハビリ',
-            duration: '10-15分',
-            exp: 50,
-            scienceBadge: null,
-            exercises: [
-              { name: 'キャットカウ', detail: '10回' },
-              { name: 'デッドバグ', detail: '左右10回×2セット' },
-              { name: 'グルートブリッジ', detail: '15回×2セット' },
-              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
-              { name: 'クラムシェル', detail: '左右15回×2セット' }
-            ]
+            id: 'm5-req1', type: 'required1',
+            title: '必須1: ウォームアップ + モビリティ + 左肩リハビリ',
+            description: '関節ほぐし → 体幹モビリティ5種 → 左肩リハビリ3種',
+            duration: '18-20分', exp: 50, scienceBadge: null,
+            exercises: getStandardMobility()
           },
           {
-            id: 'm5-req2',
-            type: 'required2',
+            id: 'm5-req2', type: 'required2',
             title: '必須2: サイクリング 60-90分',
             description: 'Zone 2（130-145 bpm）+ McLaren補給プロトコル',
-            duration: '60-90分',
-            exp: 100,
-            scienceBadge: 'f1',
+            duration: '60-90分', exp: 100, scienceBadge: 'f1',
             exercises: [
-              { name: '目標心拍数', detail: '130-145 bpm（会話テスト主指標）' },
-              { name: '補給: 開始前', detail: '水300-500ml' },
-              { name: '補給: 30分経過', detail: 'バナナ半本 or ハチミツ1杯（エネルギー維持）' },
-              { name: '補給: 60分経過', detail: '水分 + 必要ならソイラテ' },
-              { name: '終了後30分以内', detail: 'プロテイン20-40g（筋合成ウィンドウ）' }
+              { name: '🚴 ロングライドプロトコル', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: '目標心拍数', detail: '130-145 bpm（会話テスト主指標）',
+                howto: ['Day 2と同じZone 2基準で実施', '会話テストを10分ごとに確認', '145 bpm超えたら即ペースダウン'],
+                interval: '10分ごとにチェック'
+              },
+              {
+                name: '補給プロトコル（McLaren公式）', detail: '開始前・30分・60分の3ステップ',
+                howto: ['【開始前】水 300-500 ml', '【30分経過後】バナナ半本 or ハチミツ1杯（エネルギー維持）', '【60分経過後】水分 + 必要であればBCAAまたはソイラテ', '【終了直後30分以内】プロテイン 20-40 g（筋タンパク合成ウィンドウ）'],
+                points: ['60分以上は必ず補給（枯渇を防ぐ）', 'Zone 2中は胃腸への血流が低下するため固形食は少量ずつ'],
+                interval: '30分ごとに補給確認'
+              },
+              ...getCyclingCooldown()
             ]
           },
           {
-            id: 'm5-bonus',
-            type: 'bonus',
+            id: 'm5-bonus', type: 'bonus',
             title: 'ボーナス: 90分以上達成',
             description: '調子が良ければ90分まで延長',
-            duration: '+30分',
-            exp: 50,
-            scienceBadge: null,
+            duration: '+30分', exp: 50, scienceBadge: null,
             exercises: [
-              { name: 'サイクリング延長', detail: '90分まで延長（Zone 2維持のまま）' }
+              {
+                name: 'サイクリング延長', detail: '60分時点で余裕があれば90分まで延長',
+                howto: ['60分の時点で体の状態を確認', '心拍数が130-145 bpmで安定 + 膝に違和感なし → 延長可', 'Zone 2を維持しながら90分まで延長'],
+                interval: '延長後クールダウンへ'
+              }
             ]
           }
         ]
       },
+
+      // ── DAY 6 ──────────────────────────────────────────
       {
         date: '2026-02-23',
         dayNumber: 6,
@@ -484,48 +634,85 @@
         scienceNote: 'Formula1.com公式: ビジュアライゼーションと反応速度トレーニングを週4-5回実施。反応速度は6-8週で10-20%改善可能。',
         missions: [
           {
-            id: 'm6-req1',
-            type: 'required1',
+            id: 'm6-req1', type: 'required1',
             title: '必須1: モビリティルーティン（拡張版）',
-            description: '通常ルーティン + スパインロール + 胸椎回旋',
-            duration: '15分',
-            exp: 50,
-            scienceBadge: null,
+            description: '通常ルーティン + スパインロール + 胸椎回旋（アクティブレストデー特別版）',
+            duration: '20分', exp: 50, scienceBadge: null,
             exercises: [
-              { name: '通常モビリティ5種', detail: 'キャットカウ、デッドバグ、グルートブリッジ、腸腰筋、クラムシェル' },
-              { name: '🆕 スパインロール', detail: '首から順番に背骨を1個ずつ前屈 → 起き上がる × 3回' },
-              { name: '🆕 胸椎回旋', detail: '横向き、上の腕を後ろに回す × 各10回' }
+              ...getStandardMobility(),
+              { name: '◾ 追加モビリティ（Day 6 拡張）', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: '🆕 スパインロール（脊柱分節モビリゼーション）', detail: '3回（首から順番に背骨1個ずつ）',
+                howto: ['立位で足を肩幅', '首から順番に背骨を1個ずつ丸めながら前屈していく', '手が床に届く（届かなくてもOK）まで丸める', '今度は腰から順番に背骨を1個ずつ起き上がらせる', '3回繰り返す'],
+                points: ['「ゆっくり」が最重要（速くやると意味がない）', '重力に逆らわず背中を丸める', '各椎骨を個別に意識する（難しいが効果大）'],
+                interval: '次の種目へ'
+              },
+              {
+                name: '🆕 胸椎回旋（デスクワーク・ドライビング姿勢対策）', detail: '各10回（横向きに寝て）',
+                howto: ['横向きに寝る（膝は90度に曲げて安定させる）', '上の腕を胸の前から後ろへゆっくり回す（床に触れるまで）', '目線は回した腕の方向を追う', '10回 → 反対側も同様'],
+                points: ['骨盤・腰椎は動かさない（胸椎だけを回す）', '呼吸と連動（吐きながら回す）', '首・肩の力を抜く'],
+                ng: 'NG: 骨盤も一緒に回してしまう',
+                interval: '左右交互'
+              }
             ]
           },
           {
-            id: 'm6-req2',
-            type: 'required2',
+            id: 'm6-req2', type: 'required2',
             title: '必須2: ウォーキング（30分）',
             description: '心拍90-100 bpm（完全回復域）',
-            duration: '30分',
-            exp: 100,
-            scienceBadge: null,
+            duration: '30分', exp: 100, scienceBadge: null,
             exercises: [
-              { name: 'ペース', detail: '心拍90-100 bpm（会話が楽にできるペース）' },
-              { name: '姿勢意識', detail: 'ニュートラルスパイン（おへそを引き込む）' },
-              { name: '着地', detail: 'かかと → 中足部 → つま先の順で着地' }
+              { name: '🚶 アクティブリカバリーウォーキング', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: 'ペース設定', detail: '心拍90-100 bpm（会話が楽にできるペース）',
+                howto: ['のんびり散歩ペース（速歩きはしない）', '心拍計を確認しながら調整', '会話が余裕でできるペース'],
+                interval: '30分継続'
+              },
+              {
+                name: '姿勢意識', detail: 'ニュートラルスパイン（おへそを引き込む）',
+                howto: ['おへそを軽く引き込んでコアを使う', '視線は正面（下を向かない）', '肩をリラックスさせて自然に振る'],
+                points: ['反り腰にならないよう意識', '腕をリズミカルに振る'],
+                interval: 'ウォーキング中ずっと意識'
+              },
+              {
+                name: '着地方法', detail: 'かかと → 中足部 → つま先の順',
+                howto: ['かかとから着地 → 足裏の中央部へ重心移動 → つま先で蹴り出す'],
+                points: ['つま先着地（ベアフット式）でも可', 'ドシドシと音を立てない（衝撃吸収を意識）'],
+                interval: '歩行中ずっと意識'
+              },
+              { name: '🧊 クールダウン（ウォーキング後）', detail: '', isHeader: true, headerClass: 'ex-cool-hdr' },
+              {
+                name: '腹式呼吸', detail: '1分（回復促進）',
+                howto: ['仰向けに寝て目を閉じる', '鼻から4秒で吸う → 口から8秒でゆっくり吐く', '1分繰り返す'],
+                points: ['副交感神経を活性化して回復を促進'],
+                interval: '終了'
+              }
             ]
           },
           {
-            id: 'm6-bonus',
-            type: 'bonus',
+            id: 'm6-bonus', type: 'bonus',
             title: '🆕 ボーナス: ビジュアライゼーション + 反応テスト',
             description: 'F1公式メンタルトレーニング初回（Ferrari/McLaren採用手法）',
-            duration: '10分',
-            exp: 50,
-            scienceBadge: 'f1',
+            duration: '10分', exp: 50, scienceBadge: 'f1',
             exercises: [
-              { name: 'ビジュアライゼーション', detail: '5分: 目を閉じて鈴鹿1周をブレーキ・ターン・アクセルまで詳細にイメージ' },
-              { name: '反応速度テスト', detail: '5分: コイン落としキャッチ × 5回。またはhumanbenchmark.com（目標300ms以下）' }
+              {
+                name: 'ビジュアライゼーション（5分）', detail: '目を閉じて鈴鹿1周を詳細にイメージ',
+                howto: ['静かな場所に座り、目を閉じる', '鈴鹿サーキット（または慣れ親しんだコース）のコースレイアウトを思い浮かべる', 'スタートラインから最初のコーナーまで、ブレーキング・ターンイン・アクセルのタイミングを詳細にイメージ', '可能なら1周分をゆっくりイメージする'],
+                points: ['映像だけでなく音・振動・Gの感覚もイメージする', '完璧な走りをイメージ（ミスをイメージしない）'],
+                interval: '5分'
+              },
+              {
+                name: '反応速度テスト（5分）', detail: 'コイン落としキャッチ × 5回（目標300ms以下）',
+                howto: ['利き手の親指と人差し指でコインを持つ（地面から100 cmの高さ）', 'コインを落とす', '反対側の手でコインが地面につく前にキャッチ', '5回試みて成功回数を記録', 'またはhumanbenchmark.comのReaction Timeテスト'],
+                points: ['目標: 300 ms以下（Week 1）', 'F1ドライバー平均: 200-250 ms', '毎週記録して改善を確認'],
+                interval: '記録を残す'
+              }
             ]
           }
         ]
       },
+
+      // ── DAY 7 ──────────────────────────────────────────
       {
         date: '2026-02-24',
         dayNumber: 7,
@@ -534,48 +721,75 @@
         scienceNote: 'Red Bull公式: F1ドライバー平均グリップ55kg以上。デッドハング最長保持でWeek 1の記録を取る。Week 2-4で継続的に伸ばす。',
         missions: [
           {
-            id: 'm7-req1',
-            type: 'required1',
-            title: '必須1: モビリティルーティン',
-            description: '反り腰改善 + 左肩リハビリ',
-            duration: '10-15分',
-            exp: 50,
-            scienceBadge: null,
-            exercises: [
-              { name: 'キャットカウ', detail: '10回' },
-              { name: 'デッドバグ', detail: '左右10回×2セット' },
-              { name: 'グルートブリッジ', detail: '15回×2セット' },
-              { name: '腸腰筋ストレッチ', detail: '左右30秒×2セット' },
-              { name: 'クラムシェル', detail: '左右15回×2セット' }
-            ]
+            id: 'm7-req1', type: 'required1',
+            title: '必須1: ウォームアップ + モビリティ + 左肩リハビリ',
+            description: '関節ほぐし → 体幹モビリティ5種 → 左肩リハビリ3種',
+            duration: '18-20分', exp: 50, scienceBadge: null,
+            exercises: getStandardMobility()
           },
           {
-            id: 'm7-req2',
-            type: 'required2',
+            id: 'm7-req2', type: 'required2',
             title: '必須2: 上半身 + 前腕強化 + HIIT',
             description: '🆕前腕カール追加 + デッドハング最長記録計測',
-            duration: '25分',
-            exp: 100,
-            scienceBadge: 'f1',
+            duration: '30分', exp: 100, scienceBadge: 'f1',
             exercises: [
-              { name: '懸垂', detail: '3回×3セット（3秒ネガティブ）' },
-              { name: '腕立て伏せ', detail: '20回×3セット' },
-              { name: 'ディップス', detail: '8回×3セット（椅子2脚）' },
-              { name: '🆕 デッドハング（最長記録）', detail: '落ちるまで保持 × 2セット（記録を！）' },
-              { name: '🆕 リストカール', detail: '15回×2セット（ペットボトル500ml〜1L）' },
-              { name: 'タバタHIIT', detail: 'マウンテンクライマー 20秒×4ラウンド' }
+              { name: '◾ 上半身・前腕トレーニング', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: '懸垂', detail: '3回×3セット（3秒ネガティブ）',
+                howto: ['Day 3と同じフォームで実施', '3秒かけてゆっくり下ろす（ネガティブを意識）', '3回 × 2分休憩 × 3セット'],
+                points: ['Day 3より回数が増えていれば上達の証拠', 'ネガティブ3秒を絶対に守る'],
+                ng: 'NG: 素早く下りる',
+                interval: '2分休憩（セット間）'
+              },
+              {
+                name: '腕立て伏せ', detail: '20回×3セット',
+                howto: ['Day 3と同じフォームで実施', '20回 × 1分休憩 × 3セット'],
+                points: ['下ろす時もコントロール', '体を一直線に保つ'],
+                interval: '1分休憩（セット間）'
+              },
+              {
+                name: 'ディップス（椅子2脚）', detail: '8回×3セット',
+                howto: ['椅子2脚を背もたれを外向きに並べる', '両手で椅子の縁を握り、足は前に伸ばす', 'ゆっくり肘を曲げて腰を下げる（90度まで）', '腕で押し上げて元の位置へ', '8回 × 1分休憩 × 3セット'],
+                points: ['肘は後ろに引く（外に開かない）', '上体をやや前傾（大胸筋を使う）', '肩をすくめない'],
+                ng: 'NG: 肘が外に開く（肩を傷める）',
+                interval: '1分休憩（セット間）'
+              },
+              { name: '🆕 前腕・グリップ強化', detail: 'Red Bull公式グリップ55kg目標に向けて', isHeader: true, headerClass: 'ex-neck-hdr' },
+              {
+                name: '🆕 デッドハング（最長記録計測）', detail: '落ちるまで保持 × 2セット（記録を残す！）',
+                howto: ['懸垂バーを順手で肩幅握る', '肩甲骨を下げてぶら下がる', '限界まで保持（落ちるまで）', '記録: ___秒', '30秒休憩 → もう1セット（計2セット）'],
+                points: ['Day 1（30秒）→ Day 3（45秒）→ Day 7（最長記録）の進歩を確認', 'グリップが先に限界か腕が先か確認', '来週の目標設定に使う'],
+                interval: '30秒休憩（セット間）'
+              },
+              {
+                name: '🆕 リストカール（前腕カール）', detail: '15回×2セット（ペットボトル500ml〜1L）',
+                howto: ['椅子に座り、前腕を太もも上に乗せる（手首が膝より前に出る）', 'ペットボトル（500 ml〜1 L）を逆手で握る', '手首を上に曲げる（最大可動域まで）', 'ゆっくり下ろす → 15回', '30秒休憩 × 2セット（両腕）'],
+                points: ['前腕を太ももから離さない（固定が重要）', '手首のみ動かす（肘は使わない）', '重すぎる場合は軽くする（フォーム優先）'],
+                ng: 'NG: 肘を使って持ち上げる（それはカールではなくアームカール）',
+                interval: '30秒休憩（セット間）'
+              },
+              { name: '◾ HIIT（仕上げ）', detail: '', isHeader: true, headerClass: 'ex-main-hdr' },
+              {
+                name: 'マウンテンクライマー（タバタ）', detail: '20秒 / 10秒 × 4ラウンド',
+                howto: ['腕立て伏せ姿勢で右膝・左膝を交互に胸へ素早く引き寄せる', '20秒全力 → 10秒完全停止 × 4ラウンド'],
+                points: ['Week 1最終日 → 全力を出し切る', '腰が上がらないよう一直線をキープ'],
+                interval: '10秒完全休憩（ラウンド間）'
+              },
+              ...getCooldown()
             ]
           },
           {
-            id: 'm7-bonus',
-            type: 'bonus',
+            id: 'm7-bonus', type: 'bonus',
             title: 'ボーナス: タバタ式6ラウンド + Week 1完全達成！',
             description: '6ラウンド達成で Week 1 Complete！🏁',
-            duration: '3分',
-            exp: 50,
-            scienceBadge: null,
+            duration: '3分', exp: 50, scienceBadge: null,
             exercises: [
-              { name: 'マウンテンクライマー延長', detail: '6ラウンドに延長 → Week 1完全クリア！' }
+              {
+                name: 'マウンテンクライマー延長', detail: '6ラウンドに延長 → Week 1完全クリア！',
+                howto: ['必須2のタバタを4ラウンドから6ラウンドに延長', '全力で完走 → Week 1完全制覇'],
+                points: ['最後まで全力を出し切る'],
+                interval: '10秒完全休憩（ラウンド間）'
+              }
             ]
           }
         ]
@@ -597,9 +811,7 @@
 
     function loadData() {
       const saved = localStorage.getItem('gt-racer-app-data');
-      if (saved) {
-        appData = JSON.parse(saved);
-      }
+      if (saved) { try { appData = JSON.parse(saved); } catch(e) {} }
     }
 
     function saveData() {
@@ -623,9 +835,7 @@
 
     function getRankByExp(exp) {
       for (const rank of RANKS) {
-        if (exp >= rank.minExp && exp <= rank.maxExp) {
-          return rank.rank;
-        }
+        if (exp >= rank.minExp && exp <= rank.maxExp) return rank.rank;
       }
       return 'Rookie';
     }
@@ -634,42 +844,26 @@
       const currentRank = RANKS.find(r => currentExp >= r.minExp && currentExp <= r.maxExp);
       const currentIndex = RANKS.findIndex(r => r.rank === currentRank?.rank);
       const nextRank = RANKS[currentIndex + 1];
-
-      if (!nextRank) {
-        return { nextRank: 'Legend', nextRankExp: Infinity, progress: 100 };
-      }
-
+      if (!nextRank) return { nextRank: 'Legend', nextRankExp: Infinity, progress: 100 };
       const progress = ((currentExp - currentRank.minExp) / (nextRank.minExp - currentRank.minExp)) * 100;
-      return {
-        nextRank: nextRank.rank,
-        nextRankExp: nextRank.minExp,
-        progress: Math.min(Math.round(progress), 100)
-      };
+      return { nextRank: nextRank.rank, nextRankExp: nextRank.minExp, progress: Math.min(Math.round(progress), 100) };
     }
 
     function completeMission(missionId, exp) {
       const today = new Date().toISOString().split('T')[0];
       const todayRecord = getTodayRecord();
-
       if (!todayRecord) {
-        appData.history.push({
-          date: today,
-          completions: [{ missionId, exp, completedAt: new Date().toISOString() }],
-          totalExp: exp,
-          isPerfectDay: false
-        });
+        appData.history.push({ date: today, completions: [{ missionId, exp, completedAt: new Date().toISOString() }], totalExp: exp, isPerfectDay: false });
       } else {
         if (!todayRecord.completions.some(c => c.missionId === missionId)) {
           todayRecord.completions.push({ missionId, exp, completedAt: new Date().toISOString() });
           todayRecord.totalExp += exp;
         }
       }
-
       const oldRank = appData.profile.currentRank;
       appData.profile.totalExp += exp;
       appData.profile.currentRank = getRankByExp(appData.profile.totalExp);
       const rankUp = oldRank !== appData.profile.currentRank;
-
       saveData();
       showExpModal(exp, rankUp);
       return rankUp;
@@ -677,17 +871,61 @@
 
     function showExpModal(exp, rankUp) {
       const modal = document.getElementById('exp-modal');
-      const expAmount = document.getElementById('exp-amount');
-      const rankUpMsg = document.getElementById('rank-up-msg');
-
-      expAmount.textContent = `+${exp} EXP!`;
-      rankUpMsg.classList.toggle('hidden', !rankUp);
-
+      document.getElementById('exp-amount').textContent = `+${exp} EXP!`;
+      document.getElementById('rank-up-msg').classList.toggle('hidden', !rankUp);
       modal.classList.remove('hidden');
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        showPage(currentPage);
-      }, 2000);
+      setTimeout(() => { modal.classList.add('hidden'); showPage(currentPage); }, 2000);
+    }
+
+    // ========== EXERCISE ITEM RENDERER ==========
+    function renderExerciseItem(ex, key) {
+      if (ex.isHeader) {
+        const hdrClass = ex.headerClass || 'ex-main-hdr';
+        return `<div class="ex-section-hdr ${hdrClass}">${ex.name}${ex.detail ? '<span class="font-normal normal-case ml-2 text-gray-500">' + ex.detail + '</span>' : ''}</div>`;
+      }
+
+      const hasDetail = !!(ex.howto || ex.points || ex.ng);
+
+      return `
+        <div class="mb-2 bg-gray-800 rounded-lg p-3">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex-1 min-w-0">
+              <p class="text-white font-medium text-sm">${ex.name}</p>
+              <p class="text-xs text-gray-400 mt-0.5">${ex.detail || ''}</p>
+              ${ex.interval ? `<p class="text-xs text-green-400 mt-1">⏸ ${ex.interval}</p>` : ''}
+            </div>
+            ${hasDetail ? `
+              <button onclick="toggleExDet('${key}')" class="flex-shrink-0 text-xs text-racing-orange font-semibold hover:text-orange-400 transition-colors mt-0.5 whitespace-nowrap">やり方▼</button>
+            ` : ''}
+          </div>
+          ${hasDetail ? `
+            <div id="exd-${key}" class="hidden mt-3 pt-3 border-t border-gray-700 text-xs space-y-3">
+              ${ex.howto ? `
+                <div>
+                  <p class="font-semibold text-gray-300 mb-1.5">📋 やり方</p>
+                  <ol class="space-y-1 text-gray-400 pl-4 list-decimal">
+                    ${ex.howto.map(s => `<li>${s}</li>`).join('')}
+                  </ol>
+                </div>
+              ` : ''}
+              ${ex.points ? `
+                <div>
+                  <p class="font-semibold text-green-400 mb-1">✅ ポイント</p>
+                  <ul class="space-y-0.5 text-gray-400">
+                    ${ex.points.map(p => `<li>· ${p}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+              ${ex.ng ? `<p class="text-red-400">⚠️ ${ex.ng}</p>` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function toggleExDet(key) {
+      const el = document.getElementById('exd-' + key);
+      if (el) el.classList.toggle('hidden');
     }
 
     // ========== UI RENDERING ==========
@@ -695,20 +933,13 @@
 
     function showPage(page) {
       currentPage = page;
-
       ['home', 'progress', 'science', 'history', 'settings'].forEach(tab => {
         const el = document.getElementById(`tab-${tab}`);
         if (el) {
-          if (tab === page) {
-            el.classList.remove('tab-inactive');
-            el.classList.add('tab-active');
-          } else {
-            el.classList.remove('tab-active');
-            el.classList.add('tab-inactive');
-          }
+          el.classList.toggle('tab-active', tab === page);
+          el.classList.toggle('tab-inactive', tab !== page);
         }
       });
-
       const app = document.getElementById('app');
       if (page === 'home') app.innerHTML = renderHomePage();
       else if (page === 'progress') app.innerHTML = renderProgressPage();
@@ -726,18 +957,51 @@
       return '';
     }
 
+    function renderMissionCard(mission) {
+      const isCompleted = isMissionCompleted(mission.id);
+      const borderColor = mission.type === 'required1' ? 'border-racing-red' : mission.type === 'required2' ? 'border-racing-orange' : 'border-racing-yellow';
+
+      return `
+        <div class="bg-bg-card rounded-lg p-4 shadow-lg border-l-4 ${borderColor} ${isCompleted ? 'opacity-60' : ''}">
+          <div class="flex items-start justify-between mb-2">
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-white">${mission.title}</h3>
+              <p class="text-sm text-gray-400">${mission.description}</p>
+              ${mission.scienceBadge ? getBadgeHTML(mission.scienceBadge) : ''}
+            </div>
+            ${isCompleted ? '<span class="text-2xl ml-2">✅</span>' : ''}
+          </div>
+          <div class="flex items-center justify-between mt-2">
+            <div class="flex gap-4 text-sm text-gray-400">
+              <span>⏱️ ${mission.duration}</span>
+              <span class="text-racing-yellow font-semibold">${mission.exp} EXP</span>
+            </div>
+            <button onclick="toggleMissionDetail('${mission.id}')" class="text-racing-red hover:text-red-400 transition-colors text-sm font-medium">
+              詳細 ▼
+            </button>
+          </div>
+          <div id="detail-${mission.id}" class="hidden mt-4 border-t border-gray-700 pt-4">
+            ${mission.exercises.map((ex, idx) => renderExerciseItem(ex, `${mission.id}-${idx}`)).join('')}
+            ${!isCompleted ? `
+              <button onclick="completeSingleMission('${mission.id}', ${mission.exp})" class="mt-4 w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+                このミッション完了 ✓
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
     function renderHomePage() {
       const todayMissions = getTodayMissions();
       const nextRankInfo = getNextRankInfo(appData.profile.totalExp);
       const rankInfo = RANKS.find(r => r.rank === appData.profile.currentRank);
       const today = new Date().toISOString().split('T')[0];
-      const isToday = todayMissions.date === today;
 
       return `
         <div class="px-4 pt-6 animate-slide-in">
-          <!-- Version Badge -->
           <div class="mb-4 text-center">
-            <span class="text-xs text-gray-500">v2.0 — 科学的レビュー反映版（2026-02-18）</span>
+            <span class="text-xs text-gray-500">v2.1 — ウォームアップ・クールダウン・左肩リハビリ追加版</span>
           </div>
 
           <!-- Rank & EXP -->
@@ -758,9 +1022,7 @@
               </div>
               <div class="text-center text-sm text-gray-400 mt-1">${nextRankInfo.progress}%</div>
             </div>
-            <p class="text-center text-sm text-gray-400 mt-2">
-              次のランク（${nextRankInfo.nextRank}）まで ${nextRankInfo.nextRankExp === Infinity ? 0 : nextRankInfo.nextRankExp - appData.profile.totalExp} EXP
-            </p>
+            <p class="text-center text-sm text-gray-400 mt-2">次のランク（${nextRankInfo.nextRank}）まで ${nextRankInfo.nextRankExp === Infinity ? 0 : nextRankInfo.nextRankExp - appData.profile.totalExp} EXP</p>
           </div>
 
           <!-- Today's Science Note -->
@@ -779,13 +1041,10 @@
           <!-- Today's Missions -->
           <div class="mb-6">
             <div class="flex items-center gap-2 mb-2">
-              <h2 class="text-2xl font-bold text-white">
-                Day ${todayMissions.dayNumber}: ${todayMissions.dayName}
-              </h2>
+              <h2 class="text-2xl font-bold text-white">Day ${todayMissions.dayNumber}: ${todayMissions.dayName}</h2>
             </div>
             <p class="text-sm text-gray-400 mb-1">${todayMissions.date}</p>
             <p class="text-xs text-gray-500 mb-4">${todayMissions.theme}</p>
-
             <div class="space-y-4">
               ${todayMissions.missions.map(mission => renderMissionCard(mission)).join('')}
             </div>
@@ -803,12 +1062,7 @@
                 return `
                   <div class="text-center">
                     <div class="text-xs text-gray-500 mb-1">D${day.dayNumber}</div>
-                    <div class="w-8 h-8 rounded-full mx-auto flex items-center justify-center text-xs font-bold ${
-                      completed ? 'bg-racing-red text-white' :
-                      isCurrentDay ? 'border-2 border-racing-red text-racing-red' :
-                      isPast ? 'bg-gray-700 text-gray-500' :
-                      'bg-gray-800 text-gray-600'
-                    }">
+                    <div class="w-8 h-8 rounded-full mx-auto flex items-center justify-center text-xs font-bold ${completed ? 'bg-racing-red text-white' : isCurrentDay ? 'border-2 border-racing-red text-racing-red' : isPast ? 'bg-gray-700 text-gray-500' : 'bg-gray-800 text-gray-600'}">
                       ${completed ? '✓' : day.dayNumber}
                     </div>
                   </div>
@@ -825,108 +1079,45 @@
       `;
     }
 
-    function renderMissionCard(mission) {
-      const isCompleted = isMissionCompleted(mission.id);
-      const borderColor = mission.type === 'required1' ? 'border-racing-red' : mission.type === 'required2' ? 'border-racing-orange' : 'border-racing-yellow';
-
-      return `
-        <div class="bg-bg-card rounded-lg p-4 shadow-lg border-l-4 ${borderColor} ${isCompleted ? 'opacity-50' : ''}">
-          <div class="flex items-start justify-between mb-2">
-            <div class="flex-1">
-              <h3 class="text-lg font-bold text-white">${mission.title}</h3>
-              <p class="text-sm text-gray-400">${mission.description}</p>
-              ${mission.scienceBadge ? getBadgeHTML(mission.scienceBadge) : ''}
-            </div>
-            ${isCompleted ? '<span class="text-2xl ml-2">✅</span>' : ''}
-          </div>
-          <div class="flex items-center justify-between mt-2">
-            <div class="flex gap-4 text-sm text-gray-400">
-              <span>⏱️ ${mission.duration}</span>
-              <span class="text-racing-yellow font-semibold">${mission.exp} EXP</span>
-            </div>
-            <button onclick="toggleMissionDetail('${mission.id}')" class="text-racing-red hover:text-red-400 transition-colors text-sm font-medium">
-              詳細 ▼
-            </button>
-          </div>
-          <div id="detail-${mission.id}" class="hidden mt-4 border-t border-gray-700 pt-4">
-            ${mission.exercises.map(ex => `
-              <div class="mb-3">
-                <p class="text-white font-medium text-sm">${ex.name}</p>
-                <p class="text-xs text-gray-400">${ex.detail}</p>
-              </div>
-            `).join('')}
-            ${!isCompleted ? `<button onclick="completeSingleMission('${mission.id}', ${mission.exp})" class="mt-4 w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">このミッション完了</button>` : ''}
-          </div>
-        </div>
-      `;
-    }
-
     function renderProgressPage() {
       const rankInfo = RANKS.find(r => r.rank === appData.profile.currentRank);
       const nextRankInfo = getNextRankInfo(appData.profile.totalExp);
-
       return `
         <div class="px-4 pt-6 animate-slide-in">
           <h2 class="text-3xl font-bold text-white mb-6">進捗</h2>
-
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">累計EXP</h3>
-            <div class="text-5xl font-bold text-racing-yellow text-center mb-6">
-              ${appData.profile.totalExp} EXP
-            </div>
-
+            <div class="text-5xl font-bold text-racing-yellow text-center mb-6">${appData.profile.totalExp} EXP</div>
             <h3 class="text-xl font-bold text-white mb-4">現在のランク</h3>
             <div class="flex justify-center mb-6">
               <div class="inline-flex items-center gap-2 text-white font-bold py-3 px-6 rounded-full shadow-lg text-xl" style="background-color: ${rankInfo.color}">
-                <span class="text-3xl">${rankInfo.icon}</span>
-                <span>${rankInfo.rank}</span>
+                <span class="text-3xl">${rankInfo.icon}</span><span>${rankInfo.rank}</span>
               </div>
             </div>
-
-            <h3 class="text-xl font-bold text-white mb-4">次のランクまで</h3>
             <div class="mb-2">
               <div class="flex justify-between text-sm text-gray-400 mb-1">
                 <span>${appData.profile.totalExp} EXP</span>
                 <span>${nextRankInfo.nextRankExp === Infinity ? appData.profile.totalExp : nextRankInfo.nextRankExp} EXP</span>
               </div>
               <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
-                <div class="bg-gradient-to-r from-racing-red to-racing-orange h-full transition-all duration-500" style="width: ${nextRankInfo.progress}%"></div>
+                <div class="bg-gradient-to-r from-racing-red to-racing-orange h-full" style="width: ${nextRankInfo.progress}%"></div>
               </div>
               <div class="text-center text-sm text-gray-400 mt-1">${nextRankInfo.progress}%</div>
             </div>
           </div>
-
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">Week 1 目標指標</h3>
             <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400 text-sm">Zone 2 心拍数</span>
-                <span class="text-white text-sm font-medium">130-145 bpm ✅修正済</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400 text-sm">デッドハング目標</span>
-                <span class="text-white text-sm font-medium">30-45秒</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400 text-sm">首 アイソメトリック</span>
-                <span class="text-white text-sm font-medium">4方向×10秒×3セット</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400 text-sm">反応速度 目標</span>
-                <span class="text-white text-sm font-medium">300ms以下</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400 text-sm">腰痛レベル 目標</span>
-                <span class="text-white text-sm font-medium">3/10以下</span>
-              </div>
+              <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Zone 2 心拍数</span><span class="text-white text-sm font-medium">130-145 bpm ✅修正済</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">デッドハング目標</span><span class="text-white text-sm font-medium">30-45秒</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">首 アイソメトリック</span><span class="text-white text-sm font-medium">4方向×10秒×3セット</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">反応速度 目標</span><span class="text-white text-sm font-medium">300ms以下</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">左肩ウォールスライド</span><span class="text-white text-sm font-medium">可動域の変化を確認</span></div>
             </div>
           </div>
-
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">連続達成日数</h3>
-            <div class="text-4xl font-bold text-racing-orange text-center mb-2">
-              🔥 ${appData.profile.currentStreak}日連続
-            </div>
+            <div class="text-4xl font-bold text-racing-orange text-center mb-2">🔥 ${appData.profile.currentStreak}日連続</div>
             <p class="text-center text-gray-400">最長: ${appData.profile.longestStreak}日</p>
           </div>
         </div>
@@ -938,50 +1129,17 @@
         <div class="px-4 pt-6 animate-slide-in">
           <h2 class="text-3xl font-bold text-white mb-2">科学的根拠</h2>
           <p class="text-sm text-gray-400 mb-6">レビュー日: 2026-02-18 | F1公式 + 最新スポーツ科学（2024-2025）</p>
-
-          <!-- Review Summary -->
           <div class="bg-red-900 bg-opacity-40 border border-red-700 rounded-lg p-4 mb-6">
-            <h3 class="text-lg font-bold text-red-300 mb-3">🔴 今回の主要改訂事項</h3>
+            <h3 class="text-lg font-bold text-red-300 mb-3">🔴 主要改訂事項（v2.1）</h3>
             <div class="space-y-2">
-              <div class="flex gap-2">
-                <span class="text-red-400 text-sm">❶</span>
-                <div>
-                  <p class="text-white text-sm font-medium">Zone 2 心拍数修正（HIGH）</p>
-                  <p class="text-gray-400 text-xs">110-130 bpm → 130-145 bpm（IJSPP 2024）</p>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="text-red-400 text-sm">❷</span>
-                <div>
-                  <p class="text-white text-sm font-medium">Day4プライオメトリクス削除（HIGH・安全）</p>
-                  <p class="text-gray-400 text-xs">ランナーズニー後2週間高衝撃禁止（JOSPT 2019）</p>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="text-yellow-400 text-sm">❸</span>
-                <div>
-                  <p class="text-white text-sm font-medium">首トレF1基準に強化（MEDIUM）</p>
-                  <p class="text-gray-400 text-xs">等尺性収縮+セット数明確化（PMC Cervical Study）</p>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="text-yellow-400 text-sm">❹</span>
-                <div>
-                  <p class="text-white text-sm font-medium">グリップ・前腕トレ追加（MEDIUM）</p>
-                  <p class="text-gray-400 text-xs">デッドハング + リストカール（Red Bull公式）</p>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="text-yellow-400 text-sm">❺</span>
-                <div>
-                  <p class="text-white text-sm font-medium">反応速度トレ導入（LOW）</p>
-                  <p class="text-gray-400 text-xs">F1公式メンタルトレ + コイン落とし反応テスト</p>
-                </div>
-              </div>
+              <div class="flex gap-2"><span class="text-red-400 text-sm">❶</span><div><p class="text-white text-sm font-medium">Zone 2 心拍数修正（HIGH）</p><p class="text-gray-400 text-xs">110-130 bpm → 130-145 bpm（IJSPP 2024）</p></div></div>
+              <div class="flex gap-2"><span class="text-red-400 text-sm">❷</span><div><p class="text-white text-sm font-medium">Day4プライオメトリクス削除（HIGH・安全）</p><p class="text-gray-400 text-xs">ランナーズニー後2週間高衝撃禁止（JOSPT 2019）</p></div></div>
+              <div class="flex gap-2"><span class="text-orange-400 text-sm">❸</span><div><p class="text-white text-sm font-medium">🆕 左肩リハビリ3種を全日追加</p><p class="text-gray-400 text-xs">ペンデュラム・ウォールスライド・クロスボディストレッチ（v2.1）</p></div></div>
+              <div class="flex gap-2"><span class="text-orange-400 text-sm">❹</span><div><p class="text-white text-sm font-medium">🆕 ウォームアップ（3分）を全日追加</p><p class="text-gray-400 text-xs">足首・膝・腰・肩・首の関節ほぐし（v2.1）</p></div></div>
+              <div class="flex gap-2"><span class="text-orange-400 text-sm">❺</span><div><p class="text-white text-sm font-medium">🆕 クールダウン（5-7分）を全日追加</p><p class="text-gray-400 text-xs">ハムストリングス・腸腰筋・カーフ・胸・腹式呼吸（v2.1）</p></div></div>
+              <div class="flex gap-2"><span class="text-yellow-400 text-sm">❻</span><div><p class="text-white text-sm font-medium">🆕 各種目のやり方・ポイント・NG解説追加</p><p class="text-gray-400 text-xs">「やり方▼」ボタンで展開（v2.1）</p></div></div>
             </div>
           </div>
-
-          <!-- Science Notes -->
           <div class="space-y-4">
             ${SCIENCE_NOTES.map(note => `
               <div class="bg-bg-card rounded-lg p-4 shadow-lg border-l-4 ${note.badge === 'f1' ? 'border-red-700' : note.badge === 'safety' ? 'border-green-700' : 'border-blue-700'}">
@@ -991,16 +1149,12 @@
                     <p class="text-xs text-gray-500 mb-1">${note.category}</p>
                     <h4 class="text-white font-bold text-sm mb-2">${note.title}</h4>
                     <p class="text-gray-400 text-xs leading-relaxed mb-2">${note.content}</p>
-                    <p class="text-xs" style="color: ${note.badge === 'f1' ? '#fca5a5' : note.badge === 'safety' ? '#86efac' : '#93c5fd'}">
-                      📎 ${note.source}
-                    </p>
+                    <p class="text-xs" style="color: ${note.badge === 'f1' ? '#fca5a5' : note.badge === 'safety' ? '#86efac' : '#93c5fd'}">📎 ${note.source}</p>
                   </div>
                 </div>
               </div>
             `).join('')}
           </div>
-
-          <!-- F1 Teams Reference -->
           <div class="bg-bg-card rounded-lg p-4 mt-6 mb-4">
             <h3 class="text-lg font-bold text-white mb-3">🏎️ 参照F1チーム公式コンテンツ</h3>
             <div class="space-y-2 text-sm text-gray-400">
@@ -1016,13 +1170,10 @@
 
     function renderHistoryPage() {
       const sortedHistory = [...appData.history].sort((a, b) => new Date(b.date) - new Date(a.date));
-
       return `
         <div class="px-4 pt-6 animate-slide-in">
           <h2 class="text-3xl font-bold text-white mb-6">履歴</h2>
-
           ${sortedHistory.length === 0 ? '<p class="text-gray-400 text-center">まだ記録がありません</p>' : ''}
-
           <div class="space-y-4">
             ${sortedHistory.map(record => {
               const dayMission = WEEK1_MISSIONS.find(m => m.date === record.date);
@@ -1036,11 +1187,8 @@
                     ${record.isPerfectDay ? '<span class="text-2xl">🎉</span>' : ''}
                   </div>
                   <div class="space-y-1 mb-2">
-                    ${record.completions.map(c => `
-                      <p class="text-sm text-green-400">✅ (+${c.exp} EXP)</p>
-                    `).join('')}
+                    ${record.completions.map(c => `<p class="text-sm text-green-400">✅ (+${c.exp} EXP)</p>`).join('')}
                   </div>
-                  ${record.isPerfectDay ? '<p class="text-racing-yellow font-bold">Perfect Day!</p>' : ''}
                   <p class="text-white font-semibold mt-2">合計: +${record.totalExp} EXP</p>
                 </div>
               `;
@@ -1054,25 +1202,17 @@
       return `
         <div class="px-4 pt-6 animate-slide-in">
           <h2 class="text-3xl font-bold text-white mb-6">設定</h2>
-
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">プロファイル</h3>
             <p class="text-gray-400 mb-2">名前: <span class="text-white">${appData.profile.name}</span></p>
             <p class="text-gray-400 mb-2">開始日: <span class="text-white">${appData.profile.startDate}</span></p>
-            <p class="text-gray-400 mb-2">バージョン: <span class="text-white">v2.0（科学的レビュー版）</span></p>
+            <p class="text-gray-400 mb-2">バージョン: <span class="text-white">v2.1（ウォームアップ・クールダウン・左肩リハビリ追加版）</span></p>
           </div>
-
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">データ管理</h3>
-            <button onclick="exportData()" class="w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg mb-3 transition-all">
-              データをエクスポート
-            </button>
-            <button onclick="importData()" class="w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg mb-3 transition-all">
-              データをインポート
-            </button>
-            <button onclick="resetData()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all">
-              データをリセット
-            </button>
+            <button onclick="exportData()" class="w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg mb-3 transition-all">データをエクスポート</button>
+            <button onclick="importData()" class="w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg mb-3 transition-all">データをインポート</button>
+            <button onclick="resetData()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all">データをリセット</button>
           </div>
         </div>
       `;
@@ -1080,35 +1220,21 @@
 
     // ========== ACTIONS ==========
     function toggleMissionDetail(missionId) {
-      const detail = document.getElementById(`detail-${missionId}`);
-      detail.classList.toggle('hidden');
+      document.getElementById(`detail-${missionId}`)?.classList.toggle('hidden');
     }
 
     function completeSingleMission(missionId, exp) {
-      if (isMissionCompleted(missionId)) {
-        alert('このミッションは既に完了しています！');
-        return;
-      }
+      if (isMissionCompleted(missionId)) { alert('このミッションは既に完了しています！'); return; }
       completeMission(missionId, exp);
     }
 
     function completeAllMissions() {
       const todayMissions = getTodayMissions();
-      let totalExp = 0;
       let completedCount = 0;
-
       for (const mission of todayMissions.missions) {
-        if (!isMissionCompleted(mission.id)) {
-          completeMission(mission.id, mission.exp);
-          totalExp += mission.exp;
-          completedCount++;
-        }
+        if (!isMissionCompleted(mission.id)) { completeMission(mission.id, mission.exp); completedCount++; }
       }
-
-      if (completedCount === 0) {
-        alert('今日のミッション全て完了済みです！🏁');
-        return;
-      }
+      if (completedCount === 0) { alert('今日のミッション全て完了済みです！🏁'); }
     }
 
     function exportData() {
@@ -1116,28 +1242,19 @@
       const blob = new Blob([dataStr], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = 'gt-racer-data-backup.json';
-      a.click();
+      a.href = url; a.download = 'gt-racer-data-backup.json'; a.click();
       alert('データをエクスポートしました！');
     }
 
     function importData() {
       const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'application/json';
+      input.type = 'file'; input.accept = 'application/json';
       input.onchange = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
-          try {
-            appData = JSON.parse(event.target.result);
-            saveData();
-            alert('データをインポートしました！');
-            showPage(currentPage);
-          } catch (err) {
-            alert('エラー: 無効なファイルです');
-          }
+          try { appData = JSON.parse(event.target.result); saveData(); alert('インポートしました！'); showPage(currentPage); }
+          catch (err) { alert('エラー: 無効なファイルです'); }
         };
         reader.readAsText(file);
       };
@@ -1147,20 +1264,8 @@
     function resetData() {
       if (confirm('本当にデータをリセットしますか？この操作は取り消せません。')) {
         localStorage.removeItem('gt-racer-app-data');
-        appData = {
-          profile: {
-            name: 'Boss',
-            startDate: '2026-02-18',
-            currentRank: 'Rookie',
-            totalExp: 0,
-            currentStreak: 0,
-            longestStreak: 0
-          },
-          history: []
-        };
-        saveData();
-        alert('データをリセットしました');
-        showPage('home');
+        appData = { profile: { name: 'Boss', startDate: '2026-02-18', currentRank: 'Rookie', totalExp: 0, currentStreak: 0, longestStreak: 0 }, history: [] };
+        saveData(); alert('リセットしました'); showPage('home');
       }
     }
 
