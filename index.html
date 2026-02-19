@@ -400,6 +400,28 @@
                 interval: '10分ごと'
               },
               ...getCyclingCooldown()
+            ],
+            weatherExercises: [
+              { name: '🌧️ 室内Zone 2 代替（40-50分）', detail: '強風・雨天時。心拍130-145 bpm維持が目標', isHeader: true, headerClass: 'ex-warmup-hdr' },
+              {
+                name: '踏み台昇降（メイン）', detail: '40-50分継続（20-30cmの台 or 階段1段目）',
+                howto: ['20-30cmの台 or 階段の1段目を用意（低い方が心拍が上がりにくく調整しやすい）', '右足→左足→右足→左足の順でゆっくり昇降（ステップは踵からつく）', '心拍計で130-145 bpmに調整（台の高さ・ペースで微調整）', '145 bpm超えたら少しゆっくりに。130以下なら台を高くする or ペースアップ'],
+                points: ['かかとをしっかり台に乗せる（つま先だけNG→膝への負担大）', '会話テスト: 短文は言えるが長い会話は辛い → Zone 2 ✅', '単調になりがちなので音楽・動画をかけながらでOK'],
+                ng: 'NG: 膝が内側に倒れる、かかとが浮く',
+                interval: '10分ごとに心拍確認'
+              },
+              {
+                name: '代替②: その場ゆっくりジョギング', detail: '踏み台がない場合の選択肢',
+                howto: ['その場でゆっくりジョグ（歩くより少し速い程度でOK）', '心拍130-145 bpmを維持', '145超えたらウォーキングに切り替え → 下がったらジョグ再開（インターバル的に）'],
+                points: ['速く走る必要なし（Zone 2が目的）', '床が硬い場合はシューズ着用を推奨'],
+                interval: '10分ごとにチェック'
+              },
+              {
+                name: '代替③: エアロバイク / スマートトレーナー', detail: '機器がある場合は最もおすすめ',
+                howto: ['室内バイクで通常のDay 2プロトコルをそのまま実施', 'ケイデンス80-90 rpm', '心拍130-145 bpm'],
+                interval: '同上'
+              },
+              ...getCyclingCooldown()
             ]
           },
           {
@@ -605,6 +627,28 @@
                 howto: ['【開始前】水 300-500 ml', '【30分経過後】バナナ半本 or ハチミツ1杯（エネルギー維持）', '【60分経過後】水分 + 必要であればBCAAまたはソイラテ', '【終了直後30分以内】プロテイン 20-40 g（筋タンパク合成ウィンドウ）'],
                 points: ['60分以上は必ず補給（枯渇を防ぐ）', 'Zone 2中は胃腸への血流が低下するため固形食は少量ずつ'],
                 interval: '30分ごとに補給確認'
+              },
+              ...getCyclingCooldown()
+            ],
+            weatherExercises: [
+              { name: '🌧️ 室内Zone 2 代替（60-90分）', detail: '強風・雨天時ロングセッション版。同等の有酸素ベース構築が目標', isHeader: true, headerClass: 'ex-warmup-hdr' },
+              {
+                name: '踏み台昇降（メイン・60-90分）', detail: '長時間版。心拍130-145 bpm',
+                howto: ['20-30cmの台 or 階段の1段目', '右足→左足→右足→左足でリズムよく継続', '心拍130-145 bpmを維持', '30分・60分でペースを確認してこまめに調整'],
+                points: ['60分超える場合はDay 2同様に補給（水・バナナ）', '単調さを避けるため音楽や動画を活用', '疲れたら30秒ウォーキング休憩 → 再開でOK（Zone 2維持が最優先）'],
+                ng: 'NG: 無理して続けて心拍が150以上になる',
+                interval: '10分ごとに心拍確認'
+              },
+              {
+                name: '補給プロトコル（McLaren公式・室内版）', detail: '60分超は必須',
+                howto: ['【開始前】水 300-500 ml', '【30分経過後】バナナ半本 or ハチミツ1杯', '【60分経過後】水分補給', '【終了直後30分以内】プロテイン 20-40 g'],
+                points: ['室内でも長時間は同等の補給が必要', '終了後のプロテイン摂取は必須（筋タンパク合成ウィンドウ）'],
+                interval: '30分ごとに補給確認'
+              },
+              {
+                name: '代替②: その場ゆっくりジョギング（60-90分）', detail: '踏み台がない場合',
+                howto: ['その場でゆっくりジョグ', '心拍130-145 bpmを維持', '疲れた時は歩く → 心拍が戻ったらジョグ再開'],
+                interval: '10分ごとにチェック'
               },
               ...getCyclingCooldown()
             ]
@@ -818,13 +862,20 @@
       localStorage.setItem('gt-racer-app-data', JSON.stringify(appData));
     }
 
+    // JST（UTC+9）で午前3時を日付変更ラインとする
+    // UTC+9 - 3h = UTC+6 相当にシフトして日付を取得
+    function getTrainingDate() {
+      const shifted = new Date(Date.now() + 6 * 60 * 60 * 1000);
+      return shifted.toISOString().split('T')[0];
+    }
+
     function getTodayMissions() {
-      const today = new Date().toISOString().split('T')[0];
+      const today = getTrainingDate();
       return WEEK1_MISSIONS.find(m => m.date === today) || WEEK1_MISSIONS[0];
     }
 
     function getTodayRecord() {
-      const today = new Date().toISOString().split('T')[0];
+      const today = getTrainingDate();
       return appData.history.find(h => h.date === today);
     }
 
@@ -850,7 +901,7 @@
     }
 
     function completeMission(missionId, exp) {
-      const today = new Date().toISOString().split('T')[0];
+      const today = getTrainingDate();
       const todayRecord = getTodayRecord();
       if (!todayRecord) {
         appData.history.push({ date: today, completions: [{ missionId, exp, completedAt: new Date().toISOString() }], totalExp: exp, isPerfectDay: false });
@@ -928,6 +979,14 @@
       if (el) el.classList.toggle('hidden');
     }
 
+    // ========== WEATHER MODE ==========
+    const weatherModeOn = {}; // { missionId: true/false }
+
+    function toggleWeatherMode(missionId) {
+      weatherModeOn[missionId] = !weatherModeOn[missionId];
+      showPage(currentPage);
+    }
+
     // ========== UI RENDERING ==========
     let currentPage = 'home';
 
@@ -960,17 +1019,32 @@
     function renderMissionCard(mission) {
       const isCompleted = isMissionCompleted(mission.id);
       const borderColor = mission.type === 'required1' ? 'border-racing-red' : mission.type === 'required2' ? 'border-racing-orange' : 'border-racing-yellow';
+      const inWeatherMode = !!weatherModeOn[mission.id];
+      const hasWeatherBackup = !!mission.weatherExercises;
+      const exercisesToShow = (hasWeatherBackup && inWeatherMode) ? mission.weatherExercises : mission.exercises;
 
       return `
         <div class="bg-bg-card rounded-lg p-4 shadow-lg border-l-4 ${borderColor} ${isCompleted ? 'opacity-60' : ''}">
           <div class="flex items-start justify-between mb-2">
             <div class="flex-1">
               <h3 class="text-lg font-bold text-white">${mission.title}</h3>
-              <p class="text-sm text-gray-400">${mission.description}</p>
+              <p class="text-sm text-gray-400">${inWeatherMode ? '🌧️ 室内代替プラン実施中' : mission.description}</p>
               ${mission.scienceBadge ? getBadgeHTML(mission.scienceBadge) : ''}
             </div>
-            ${isCompleted ? '<span class="text-2xl ml-2">✅</span>' : ''}
+            ${isCompleted ? `
+              <button onclick="undoMission('${mission.id}', ${mission.exp})" class="flex-shrink-0 ml-2 flex flex-col items-center gap-0.5 group" title="完了を取り消す">
+                <span class="text-2xl">✅</span>
+                <span class="text-xs text-gray-500 group-hover:text-racing-orange transition-colors whitespace-nowrap">取消</span>
+              </button>
+            ` : ''}
           </div>
+          ${hasWeatherBackup ? `
+            <div class="mt-2 mb-1">
+              <button onclick="toggleWeatherMode('${mission.id}')" class="text-xs px-3 py-1 rounded-full border transition-colors ${inWeatherMode ? 'border-orange-400 text-orange-400 hover:bg-orange-900' : 'border-blue-500 text-blue-400 hover:bg-blue-900'}">
+                ${inWeatherMode ? '☀️ 通常プランへ戻す' : '🌧️ 天気NG → 室内代替プランへ'}
+              </button>
+            </div>
+          ` : ''}
           <div class="flex items-center justify-between mt-2">
             <div class="flex gap-4 text-sm text-gray-400">
               <span>⏱️ ${mission.duration}</span>
@@ -981,7 +1055,7 @@
             </button>
           </div>
           <div id="detail-${mission.id}" class="hidden mt-4 border-t border-gray-700 pt-4">
-            ${mission.exercises.map((ex, idx) => renderExerciseItem(ex, `${mission.id}-${idx}`)).join('')}
+            ${exercisesToShow.map((ex, idx) => renderExerciseItem(ex, `${mission.id}-${idx}`)).join('')}
             ${!isCompleted ? `
               <button onclick="completeSingleMission('${mission.id}', ${mission.exp})" class="mt-4 w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
                 このミッション完了 ✓
@@ -996,12 +1070,12 @@
       const todayMissions = getTodayMissions();
       const nextRankInfo = getNextRankInfo(appData.profile.totalExp);
       const rankInfo = RANKS.find(r => r.rank === appData.profile.currentRank);
-      const today = new Date().toISOString().split('T')[0];
+      const today = getTrainingDate();
 
       return `
         <div class="px-4 pt-6 animate-slide-in">
           <div class="mb-4 text-center">
-            <span class="text-xs text-gray-500">v2.1 — ウォームアップ・クールダウン・左肩リハビリ追加版</span>
+            <span class="text-xs text-gray-500">v2.2 — 完了取消・天気NG代替・3時日付切替</span>
           </div>
 
           <!-- Rank & EXP -->
@@ -1206,7 +1280,7 @@
             <h3 class="text-xl font-bold text-white mb-4">プロファイル</h3>
             <p class="text-gray-400 mb-2">名前: <span class="text-white">${appData.profile.name}</span></p>
             <p class="text-gray-400 mb-2">開始日: <span class="text-white">${appData.profile.startDate}</span></p>
-            <p class="text-gray-400 mb-2">バージョン: <span class="text-white">v2.1（ウォームアップ・クールダウン・左肩リハビリ追加版）</span></p>
+            <p class="text-gray-400 mb-2">バージョン: <span class="text-white">v2.2（完了取消・天気NG代替・午前3時日付切替）</span></p>
           </div>
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">データ管理</h3>
@@ -1226,6 +1300,21 @@
     function completeSingleMission(missionId, exp) {
       if (isMissionCompleted(missionId)) { alert('このミッションは既に完了しています！'); return; }
       completeMission(missionId, exp);
+    }
+
+    function undoMission(missionId, exp) {
+      const todayRecord = getTodayRecord();
+      if (!todayRecord) return;
+      const compIdx = todayRecord.completions.findIndex(c => c.missionId === missionId);
+      if (compIdx === -1) return;
+      todayRecord.completions.splice(compIdx, 1);
+      todayRecord.totalExp -= exp;
+      if (todayRecord.totalExp < 0) todayRecord.totalExp = 0;
+      appData.profile.totalExp -= exp;
+      if (appData.profile.totalExp < 0) appData.profile.totalExp = 0;
+      appData.profile.currentRank = getRankByExp(appData.profile.totalExp);
+      saveData();
+      showPage(currentPage);
     }
 
     function completeAllMissions() {
