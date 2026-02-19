@@ -979,6 +979,60 @@
       if (el) el.classList.toggle('hidden');
     }
 
+    // ========== DAY PREVIEW ==========
+    let previewDayIdx = -1;
+
+    function selectPreviewDay(idx) {
+      previewDayIdx = (previewDayIdx === idx) ? -1 : idx;
+      showPage(currentPage);
+    }
+
+    function renderDayPreview(dayData, today) {
+      const dayRecord = appData.history.find(h => h.date === dayData.date);
+      const isPast = dayData.date < today;
+      const isToday = dayData.date === today;
+      const statusLabel = isToday ? '📍 本日' : isPast ? '📅 過去' : '🔮 予定';
+      const statusColor = isToday ? 'text-racing-red' : isPast ? 'text-gray-400' : 'text-blue-400';
+
+      const missionRows = dayData.missions.map(mission => {
+        const completed = dayRecord?.completions?.some(c => c.missionId === mission.id);
+        const typeColor = mission.type === 'required1' ? 'bg-racing-red' : mission.type === 'required2' ? 'bg-racing-orange' : 'bg-racing-yellow';
+        const statusIcon = completed ? '✅' : isPast ? '<span class="text-gray-600 text-sm">—</span>' : '<span class="text-xs text-gray-600">予定</span>';
+        return `
+          <div class="flex items-center justify-between py-2 border-b border-gray-700 last:border-0">
+            <div class="flex items-center gap-2 flex-1 min-w-0">
+              <div class="w-1 h-8 rounded-full flex-shrink-0 ${typeColor}"></div>
+              <div class="min-w-0">
+                <p class="text-xs font-medium text-white leading-snug">${mission.title}</p>
+                <p class="text-xs text-gray-500">${mission.duration} · ${mission.exp} EXP</p>
+              </div>
+            </div>
+            <div class="flex-shrink-0 ml-2 text-sm">${statusIcon}</div>
+          </div>
+        `;
+      }).join('');
+
+      const totalCompletions = dayRecord?.completions?.length || 0;
+      const totalMissions = dayData.missions.length;
+      const totalExp = dayRecord?.totalExp || 0;
+
+      return `
+        <div class="mt-3 bg-gray-900 rounded-xl p-4 border border-gray-700 animate-slide-in">
+          <div class="flex items-start justify-between mb-1">
+            <div>
+              <span class="text-xs font-bold ${statusColor} mr-1">${statusLabel}</span>
+              <span class="text-xs font-bold text-white">Day ${dayData.dayNumber}: ${dayData.dayName}</span>
+            </div>
+            <div class="flex-shrink-0 ml-2">
+              ${dayRecord ? `<span class="text-xs text-racing-yellow font-semibold">${totalCompletions}/${totalMissions} · +${totalExp} EXP</span>` : (isPast ? '<span class="text-xs text-gray-600">未完了</span>' : '')}
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">${dayData.theme}</p>
+          <div>${missionRows}</div>
+        </div>
+      `;
+    }
+
     // ========== WEATHER MODE ==========
     const weatherModeOn = {}; // { missionId: true/false }
 
@@ -1075,7 +1129,7 @@
       return `
         <div class="px-4 pt-6 animate-slide-in">
           <div class="mb-4 text-center">
-            <span class="text-xs text-gray-500">v2.2 — 完了取消・天気NG代替・3時日付切替</span>
+            <span class="text-xs text-gray-500">v2.3 — 完了取消・天気NG代替・3時日付切替・日付プレビュー</span>
           </div>
 
           <!-- Rank & EXP -->
@@ -1126,23 +1180,27 @@
 
           <!-- Week Overview -->
           <div class="bg-bg-card rounded-lg p-4 mb-6">
-            <h3 class="text-sm font-bold text-gray-400 mb-3">WEEK 1 概要</h3>
+            <h3 class="text-sm font-bold text-gray-400 mb-3">WEEK 1 概要 <span class="text-xs text-gray-600 font-normal">（タップで詳細）</span></h3>
             <div class="grid grid-cols-7 gap-1">
-              ${WEEK1_MISSIONS.map(day => {
+              ${WEEK1_MISSIONS.map((day, idx) => {
                 const dayRecord = appData.history.find(h => h.date === day.date);
                 const isCurrentDay = day.date === today;
                 const isPast = day.date < today;
                 const completed = dayRecord?.completions?.length > 0;
+                const isSelected = idx === previewDayIdx;
+                const baseStyle = completed ? 'bg-racing-red text-white' : isCurrentDay ? 'border-2 border-racing-red text-racing-red' : isPast ? 'bg-gray-700 text-gray-500' : 'bg-gray-800 text-gray-600';
+                const selectedRing = isSelected ? 'ring-2 ring-white ring-offset-1 ring-offset-gray-800' : '';
                 return `
-                  <div class="text-center">
+                  <div class="text-center cursor-pointer select-none" onclick="selectPreviewDay(${idx})">
                     <div class="text-xs text-gray-500 mb-1">D${day.dayNumber}</div>
-                    <div class="w-8 h-8 rounded-full mx-auto flex items-center justify-center text-xs font-bold ${completed ? 'bg-racing-red text-white' : isCurrentDay ? 'border-2 border-racing-red text-racing-red' : isPast ? 'bg-gray-700 text-gray-500' : 'bg-gray-800 text-gray-600'}">
+                    <div class="w-8 h-8 rounded-full mx-auto flex items-center justify-center text-xs font-bold transition-all active:scale-90 hover:opacity-80 ${baseStyle} ${selectedRing}">
                       ${completed ? '✓' : day.dayNumber}
                     </div>
                   </div>
                 `;
               }).join('')}
             </div>
+            ${previewDayIdx >= 0 ? renderDayPreview(WEEK1_MISSIONS[previewDayIdx], today) : ''}
           </div>
 
           <!-- Complete All Button -->
@@ -1280,7 +1338,7 @@
             <h3 class="text-xl font-bold text-white mb-4">プロファイル</h3>
             <p class="text-gray-400 mb-2">名前: <span class="text-white">${appData.profile.name}</span></p>
             <p class="text-gray-400 mb-2">開始日: <span class="text-white">${appData.profile.startDate}</span></p>
-            <p class="text-gray-400 mb-2">バージョン: <span class="text-white">v2.2（完了取消・天気NG代替・午前3時日付切替）</span></p>
+            <p class="text-gray-400 mb-2">バージョン: <span class="text-white">v2.3（完了取消・天気NG代替・午前3時日付切替・日付プレビュー）</span></p>
           </div>
           <div class="bg-bg-card rounded-lg p-6 shadow-lg mb-6">
             <h3 class="text-xl font-bold text-white mb-4">データ管理</h3>
