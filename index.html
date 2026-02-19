@@ -1070,8 +1070,13 @@
       return '';
     }
 
-    function renderMissionCard(mission) {
-      const isCompleted = isMissionCompleted(mission.id);
+    // checkDate: 完了状態を確認する日付（省略時=今日）
+    // canAct: 完了/取消ボタンを表示するか（今日表示時のみtrue）
+    function renderMissionCard(mission, checkDate, canAct) {
+      checkDate = checkDate || getTrainingDate();
+      if (canAct === undefined) canAct = true;
+      const record = appData.history.find(h => h.date === checkDate);
+      const isCompleted = record?.completions?.some(c => c.missionId === mission.id) || false;
       const borderColor = mission.type === 'required1' ? 'border-racing-red' : mission.type === 'required2' ? 'border-racing-orange' : 'border-racing-yellow';
       const inWeatherMode = !!weatherModeOn[mission.id];
       const hasWeatherBackup = !!mission.weatherExercises;
@@ -1086,13 +1091,13 @@
               ${mission.scienceBadge ? getBadgeHTML(mission.scienceBadge) : ''}
             </div>
             ${isCompleted ? `
-              <button onclick="undoMission('${mission.id}', ${mission.exp})" class="flex-shrink-0 ml-2 flex flex-col items-center gap-0.5 group" title="完了を取り消す">
+              <div class="flex-shrink-0 ml-2 flex flex-col items-center gap-0.5">
                 <span class="text-2xl">✅</span>
-                <span class="text-xs text-gray-500 group-hover:text-racing-orange transition-colors whitespace-nowrap">取消</span>
-              </button>
+                ${canAct ? `<button onclick="undoMission('${mission.id}', ${mission.exp})" class="text-xs text-gray-500 hover:text-racing-orange transition-colors whitespace-nowrap">取消</button>` : ''}
+              </div>
             ` : ''}
           </div>
-          ${hasWeatherBackup ? `
+          ${hasWeatherBackup && canAct ? `
             <div class="mt-2 mb-1">
               <button onclick="toggleWeatherMode('${mission.id}')" class="text-xs px-3 py-1 rounded-full border transition-colors ${inWeatherMode ? 'border-orange-400 text-orange-400 hover:bg-orange-900' : 'border-blue-500 text-blue-400 hover:bg-blue-900'}">
                 ${inWeatherMode ? '☀️ 通常プランへ戻す' : '🌧️ 天気NG → 室内代替プランへ'}
@@ -1110,7 +1115,7 @@
           </div>
           <div id="detail-${mission.id}" class="hidden mt-4 border-t border-gray-700 pt-4">
             ${exercisesToShow.map((ex, idx) => renderExerciseItem(ex, `${mission.id}-${idx}`)).join('')}
-            ${!isCompleted ? `
+            ${canAct && !isCompleted ? `
               <button onclick="completeSingleMission('${mission.id}', ${mission.exp})" class="mt-4 w-full bg-racing-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
                 このミッション完了 ✓
               </button>
@@ -1120,11 +1125,20 @@
       `;
     }
 
+    function closePreview() {
+      previewDayIdx = -1;
+      showPage(currentPage);
+    }
+
     function renderHomePage() {
+      const today = getTrainingDate();
       const todayMissions = getTodayMissions();
+      // 選択中の日付があればそちらを表示、なければ今日
+      const displayedDay = previewDayIdx >= 0 ? WEEK1_MISSIONS[previewDayIdx] : todayMissions;
+      const isViewingToday = displayedDay.date === today;
+      const isPastDay = displayedDay.date < today;
       const nextRankInfo = getNextRankInfo(appData.profile.totalExp);
       const rankInfo = RANKS.find(r => r.rank === appData.profile.currentRank);
-      const today = getTrainingDate();
 
       return `
         <div class="px-4 pt-6 animate-slide-in">
@@ -1153,41 +1167,49 @@
             <p class="text-center text-sm text-gray-400 mt-2">次のランク（${nextRankInfo.nextRank}）まで ${nextRankInfo.nextRankExp === Infinity ? 0 : nextRankInfo.nextRankExp - appData.profile.totalExp} EXP</p>
           </div>
 
-          <!-- Today's Science Note -->
-          ${todayMissions.scienceNote ? `
+          <!-- Science Note（表示中の日付のものを表示） -->
+          ${displayedDay.scienceNote ? `
           <div class="bg-blue-900 bg-opacity-40 border border-blue-700 rounded-lg p-3 mb-4">
             <div class="flex items-start gap-2">
               <span class="text-blue-400 text-sm">📊</span>
               <div>
-                <p class="text-blue-200 text-xs font-semibold">今日の科学的根拠</p>
-                <p class="text-blue-100 text-xs mt-1">${todayMissions.scienceNote}</p>
+                <p class="text-blue-200 text-xs font-semibold">${isViewingToday ? '今日の' : 'Day ' + displayedDay.dayNumber + 'の'}科学的根拠</p>
+                <p class="text-blue-100 text-xs mt-1">${displayedDay.scienceNote}</p>
               </div>
             </div>
           </div>
           ` : ''}
 
-          <!-- Today's Missions -->
+          <!-- 過去・未来を表示中のバナー -->
+          ${!isViewingToday ? `
+          <div class="flex items-center justify-between bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 mb-4">
+            <span class="text-xs text-gray-300">${isPastDay ? '📅 過去のトレーニングを表示中' : '🔮 予定のトレーニングを表示中'}</span>
+            <button onclick="closePreview()" class="text-xs text-racing-orange hover:text-orange-300 font-semibold whitespace-nowrap ml-2">今日に戻る ✕</button>
+          </div>
+          ` : ''}
+
+          <!-- ミッション表示（displayedDay） -->
           <div class="mb-6">
             <div class="flex items-center gap-2 mb-2">
-              <h2 class="text-2xl font-bold text-white">Day ${todayMissions.dayNumber}: ${todayMissions.dayName}</h2>
+              <h2 class="text-2xl font-bold text-white">Day ${displayedDay.dayNumber}: ${displayedDay.dayName}</h2>
             </div>
-            <p class="text-sm text-gray-400 mb-1">${todayMissions.date}</p>
-            <p class="text-xs text-gray-500 mb-4">${todayMissions.theme}</p>
+            <p class="text-sm text-gray-400 mb-1">${displayedDay.date}</p>
+            <p class="text-xs text-gray-500 mb-4">${displayedDay.theme}</p>
             <div class="space-y-4">
-              ${todayMissions.missions.map(mission => renderMissionCard(mission)).join('')}
+              ${displayedDay.missions.map(mission => renderMissionCard(mission, displayedDay.date, isViewingToday)).join('')}
             </div>
           </div>
 
           <!-- Week Overview -->
           <div class="bg-bg-card rounded-lg p-4 mb-6">
-            <h3 class="text-sm font-bold text-gray-400 mb-3">WEEK 1 概要 <span class="text-xs text-gray-600 font-normal">（タップで詳細）</span></h3>
+            <h3 class="text-sm font-bold text-gray-400 mb-3">WEEK 1 概要 <span class="text-xs text-gray-600 font-normal">（タップで切替）</span></h3>
             <div class="grid grid-cols-7 gap-1">
               ${WEEK1_MISSIONS.map((day, idx) => {
                 const dayRecord = appData.history.find(h => h.date === day.date);
                 const isCurrentDay = day.date === today;
                 const isPast = day.date < today;
                 const completed = dayRecord?.completions?.length > 0;
-                const isSelected = idx === previewDayIdx;
+                const isSelected = idx === previewDayIdx || (previewDayIdx < 0 && isCurrentDay);
                 const baseStyle = completed ? 'bg-racing-red text-white' : isCurrentDay ? 'border-2 border-racing-red text-racing-red' : isPast ? 'bg-gray-700 text-gray-500' : 'bg-gray-800 text-gray-600';
                 const selectedRing = isSelected ? 'ring-2 ring-white ring-offset-1 ring-offset-gray-800' : '';
                 return `
@@ -1200,13 +1222,14 @@
                 `;
               }).join('')}
             </div>
-            ${previewDayIdx >= 0 ? renderDayPreview(WEEK1_MISSIONS[previewDayIdx], today) : ''}
           </div>
 
-          <!-- Complete All Button -->
+          <!-- 全ミッション完了ボタン（今日表示時のみ） -->
+          ${isViewingToday ? `
           <button onclick="completeAllMissions()" class="w-full bg-racing-red hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all duration-200 active:scale-95 mb-4">
             全ミッション完了 🏁
           </button>
+          ` : ''}
         </div>
       `;
     }
