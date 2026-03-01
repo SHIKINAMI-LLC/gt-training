@@ -23,7 +23,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-bg-dark text-white pb-20">
+    <div className="min-h-screen bg-bg-dark text-white overflow-x-hidden" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}>
       {page === 'home' && (
         <HomePage
           appData={appData}

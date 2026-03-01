@@ -8,7 +8,8 @@ export default function BottomNav({ currentPage, onNavigate }) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-bg-card border-t border-gray-700 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-bg-card border-t border-gray-700 z-50"
+         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div className="flex justify-around items-center py-2">
         {tabs.map(tab => (
           <button

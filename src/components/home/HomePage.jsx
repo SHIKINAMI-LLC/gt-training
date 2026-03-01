@@ -21,7 +21,9 @@ export default function HomePage({ appData, onMissionComplete }) {
   // Which day to display in main area
   const todayMissions = getTodayMissions();
   const displayedDay  = previewDayIdx >= 0 ? WEEK1_MISSIONS[previewDayIdx] : todayMissions;
-  const isViewingToday = displayedDay.date === today;
+  // previewDayIdx === -1 のとき「今日モード」 → 操作可能
+  // Week1の日程（2/18-24）が過ぎていても、previewしていなければ今日として扱う
+  const isViewingToday = previewDayIdx === -1;
   const isPastDay      = displayedDay.date < today;
 
   function handleSelectDay(idx) {
