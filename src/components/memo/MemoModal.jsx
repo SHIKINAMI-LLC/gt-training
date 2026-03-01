@@ -44,9 +44,11 @@ export default function MemoModal({ date, existingMemo, dropboxToken, profile, d
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-end justify-center z-50 px-4 pb-4"
+    <div className="fixed inset-0 bg-black/70 flex items-end justify-center z-50 px-4"
+         style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}
          onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="bg-bg-card rounded-2xl border border-gray-700 w-full max-w-lg p-5 max-h-[85vh] overflow-y-auto">
+      <div className="bg-bg-card rounded-2xl border border-gray-700 w-full max-w-lg p-5 overflow-y-auto"
+           style={{ maxHeight: 'calc(100svh - 6rem - env(safe-area-inset-bottom))' }}>
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-black text-lg text-white">📝 今日の体調メモ</h2>
