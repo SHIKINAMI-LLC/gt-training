@@ -1,18 +1,28 @@
-import { WEEK1_MISSIONS } from '../../data/week1.js';
 import { getTrainingDate } from '../../utils/dates.js';
+import { getWeekDateRange } from '../../data/allMissions.js';
 
-const DAY_ABBR = ['月', '火', '水', '木', '金', '土', '日'];
+const DAY_ABBR_MAP = {
+  0: '日', 1: '月', 2: '火', 3: '水', 4: '木', 5: '金', 6: '土',
+};
 
-export default function WeekOverview({ history, previewDayIdx, onSelectDay }) {
+function getDayAbbr(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return DAY_ABBR_MAP[d.getDay()] || '?';
+}
+
+export default function WeekOverview({ history, previewDayIdx, onSelectDay, currentWeek }) {
   const today = getTrainingDate();
+  const missions = currentWeek ? currentWeek.missions : [];
+  const weekLabel = currentWeek ? currentWeek.label : 'Week ?';
+  const dateRange = currentWeek ? getWeekDateRange(currentWeek) : '';
 
   return (
     <div className="bg-bg-card rounded-2xl p-4 mb-4 border border-gray-700">
       <div className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">
-        Week 1 — 2/18〜2/24
+        {weekLabel} — {dateRange}
       </div>
       <div className="flex justify-between gap-1">
-        {WEEK1_MISSIONS.map((day, idx) => {
+        {missions.map((day, idx) => {
           const isToday = day.date === today;
           const isPast  = day.date < today;
           const isFuture = day.date > today;
@@ -43,7 +53,7 @@ export default function WeekOverview({ history, previewDayIdx, onSelectDay }) {
               className={`flex-1 flex flex-col items-center gap-1 rounded-xl py-2 transition-all ${bgClass} ${ringClass}`}
             >
               <span className="text-xs font-bold">
-                {DAY_ABBR[idx]}
+                {getDayAbbr(day.date)}
               </span>
               <span className="text-lg font-black">
                 {day.dayNumber}

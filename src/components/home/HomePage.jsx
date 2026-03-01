@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getTrainingDate } from '../../utils/dates.js';
-import { WEEK1_MISSIONS } from '../../data/week1.js';
+import { ALL_MISSIONS, getWeekForDate } from '../../data/allMissions.js';
 import RankCard from './RankCard.jsx';
 import WeekOverview from './WeekOverview.jsx';
 import MissionCard from './MissionCard.jsx';
@@ -8,7 +8,7 @@ import MemoModal from '../memo/MemoModal.jsx';
 
 function getTodayMissions() {
   const today = getTrainingDate();
-  return WEEK1_MISSIONS.find(m => m.date === today) || WEEK1_MISSIONS[0];
+  return ALL_MISSIONS.find(m => m.date === today) || ALL_MISSIONS[0];
 }
 
 export default function HomePage({ appData, onMissionComplete }) {
@@ -20,7 +20,9 @@ export default function HomePage({ appData, onMissionComplete }) {
 
   // Which day to display in main area
   const todayMissions = getTodayMissions();
-  const displayedDay  = previewDayIdx >= 0 ? WEEK1_MISSIONS[previewDayIdx] : todayMissions;
+  const currentWeek = getWeekForDate(today);
+  const weekMissions = currentWeek ? currentWeek.missions : ALL_MISSIONS.slice(0, 7);
+  const displayedDay  = previewDayIdx >= 0 ? weekMissions[previewDayIdx] : todayMissions;
   // previewDayIdx === -1 のとき「今日モード」 → 操作可能
   // Week1の日程（2/18-24）が過ぎていても、previewしていなければ今日として扱う
   const isViewingToday = previewDayIdx === -1;
@@ -42,7 +44,7 @@ export default function HomePage({ appData, onMissionComplete }) {
         </div>
         <div className="text-right">
           <div className="text-xs text-gray-500">{today}</div>
-          <div className="text-xs text-gray-400">Week 1</div>
+          <div className="text-xs text-gray-400">{currentWeek ? currentWeek.label : 'Week 1'}</div>
         </div>
       </div>
 
@@ -54,6 +56,7 @@ export default function HomePage({ appData, onMissionComplete }) {
         history={data.history}
         previewDayIdx={previewDayIdx}
         onSelectDay={handleSelectDay}
+        currentWeek={currentWeek}
       />
 
       {/* "Viewing past/future" banner */}
